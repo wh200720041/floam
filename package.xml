@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<package>
+  <name>floam</name>
+  <version>0.0.0</version>
+
+  <description>
+    This work is created based on some optimization on ALOAM by HKUST and LOAM by CMU
+  </description>
+
+  <maintainer email="wh200720041@gmail.com">Han Wang</maintainer>
+
+  <license>BSD</license>
+  <url>https://wanghan.pro</url>
+  <author email="wh200720041@gmail.com">Han Wang</author>
+  
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>nav_msgs</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>std_msgs</build_depend>  
+  <build_depend>rosbag</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>tf</build_depend>
+  <build_depend>eigen_conversions</build_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>nav_msgs</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>rospy</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>rosbag</run_depend>
+  <run_depend>tf</run_depend>
+  <run_depend>eigen_conversions</run_depend>
+
+  <export>
+  </export>
+</package>

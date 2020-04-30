@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<launch>
+
+    
+    <node pkg="rosbag" type="play" name="rosbag_play" args="--clock $(find floam)/dataset/2011_09_30_0018.bag"/> 
+
+    <!--- Sim Time -->
+    <param name="/use_sim_time" value="true" />
+    <param name="scan_period" value="0.1" />
+    <param name="scan_line" value="64" />
+    <param name="ring_height" type="int" value="20" />
+    <param name="ring_width" type="int" value="60" />
+    <param name="vertical_angle" type="double" value="2.0" />
+    <!--- -->
+    <node pkg="floam" type="floam_odom_estimation_node" name="floam_odom_estimation_node" output="screen"/>
+    <node pkg="floam" type="floam_laser_processing_node" name="floam_laser_processing_node" output="screen"/>
+
+    <arg name="rviz" default="true" />
+    <group if="$(arg rviz)">
+        <node launch-prefix="nice" pkg="rviz" type="rviz" name="rviz" args="-d $(find floam)/rviz/floam.rviz" />
+    </group>
+
+    
+  	<node pkg="hector_trajectory_server" type="hector_trajectory_server" name="trajectory_server_loam" ns="gt" >
+        <param name="/target_frame_name" value="world" />
+        <param name="/source_frame_name" value="velodyne" />
+        <param name="/trajectory_update_rate" value="10.0" />
+        <param name="/trajectory_publish_rate" value="10.0" />
+    </node>
+    <node pkg="hector_trajectory_server" type="hector_trajectory_server" name="trajectory_server_loam" ns="aft_mapped" >
+        <param name="/target_frame_name" value="world" />
+        <param name="/source_frame_name" value="aft_mapped" />
+        <param name="/trajectory_update_rate" value="10.0" />
+        <param name="/trajectory_publish_rate" value="10.0" />
+    </node>
+
+</launch>
