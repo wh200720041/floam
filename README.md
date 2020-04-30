@@ -32,6 +32,7 @@ Localization error:
 ## 3. Prerequisites
 ### 3.1 **Ubuntu** and **ROS**
 Ubuntu 64-bit 18.04.
+
 ROS Melodic. [ROS Installation](http://wiki.ros.org/ROS/Installation)
 
 ### 3.2. **Ceres Solver**
@@ -52,7 +53,7 @@ Follow [PCL Installation](http://www.pointclouds.org/downloads/linux.html).
 ### 4.2 Download test rosbag
 Download [KITTI sequence 05](https://drive.google.com/open?id=18ilF7GZDg2tmT6sD5pd1RjqO0XJLn9Mv) or [KITTI sequence 07](https://drive.google.com/open?id=1VpoKm7f4es4ISQ-psp4CV3iylcA4eu0-)
 
-unzip and copy the file 2011_09_30_0018.bag into src/aloam_optimized/dataset/
+Unzip and copy the file 2011_09_30_0018.bag into src/aloam_optimized/dataset/
 
 ### 4.3 Launch ROS
 ```
