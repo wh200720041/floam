@@ -53,11 +53,20 @@ Follow [PCL Installation](http://www.pointclouds.org/downloads/linux.html).
 ### 4.2 Download test rosbag
 Download [KITTI sequence 05](https://drive.google.com/open?id=18ilF7GZDg2tmT6sD5pd1RjqO0XJLn9Mv) or [KITTI sequence 07](https://drive.google.com/open?id=1VpoKm7f4es4ISQ-psp4CV3iylcA4eu0-)
 
-Unzip and copy the file 2011_09_30_0018.bag into src/aloam_optimized/dataset/
+Unzip compressed file 2011_09_30_0018.zip. If your system does not have unzip. please install unzip by 
+```
+sudo apt-get install unzip 
+```
+
+And then copy the file 2011_09_30_0018.bag into ~/catkin_ws/src/floam/dataset/ (this may take a few minutes to unzip the file)
+```
+	cd ~/catkin_ws/src/floam/dataset/
+	unzip ~/Downloads/2011_09_30_0018.zip
+```
 
 ### 4.3 Launch ROS
 ```
-    roslaunch aloam_optimized aloam_optimized.launch
+    roslaunch floam floam.launch
 ```
 
 ## 5. Test other sequence
