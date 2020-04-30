@@ -5,11 +5,10 @@
 
 This code is modified from [LOAM](https://github.com/laboshinl/loam_velodyne) and [A-LOAM](https://github.com/HKUST-Aerial-Robotics/A-LOAM) .
 
-**Modifier:** [Wang Han](http://wanghan.pro), Nanyang Technological University
+**Modifier:** [Wang Han](http://wanghan.pro), Nanyang Technological University, Singapore
 
-## 1. Modification
+## 1. Modification Highlights
 This includes some optimization on the original implementation
-
 1. Analytic methods is used instead of auto differentiation. This is performed on se3
 2. Use linear motion prediction model to estimate the initial pose
 3. Laser odometry and laser mapping are merged 
@@ -18,16 +17,18 @@ This includes some optimization on the original implementation
 ## 2. Evaluation
 Computational efficiency evaluation (based on KITTI dataset):
 Platform: Intel® Core™ i7-8700 CPU @ 3.20GHz 
-ALOAM: 151ms per frame
-ALOAM_Optimized: 59ms per frame
+| Dataset                                      | ALOAM                      | FLOAM                  |
+|----------------------------------------------|----------------------------|------------------------|
+| `KITTI sequence 02`                          | 151ms                      | 59ms                   |
 
 Localization error:
-dataset      			ALOAM     	ALOAM_Optimized
-KITTI sequence 00		0.55%		0.51%
-KITTI sequence 02		3.93%		1.25%
-KITTI sequence 05   	1.28%   	0.93%
+| Dataset                                      | ALOAM                      | FLOAM                  |
+|----------------------------------------------|----------------------------|------------------------|
+| `KITTI sequence 00`                          | 0.55%                      | 0.51%                  |
+| `KITTI sequence 02`                          | 3.93%                      | 1.25%                  |
+| `KITTI sequence 05`                          | 1.28%                      | 0.93%                  |
 
-<img src="https://github.com/wh200720041/FLOAM/img/kitti_example.gif"/>
+<img src="https://github.com/wh200720041/floam/blob/master/img/kitti_example.gif"/>
 
 ## 3. Prerequisites
 ### 3.1 **Ubuntu** and **ROS**
@@ -51,7 +52,7 @@ Clone the repository and catkin_make:
     source ~/catkin_ws/devel/setup.bash
 ```
 ### 4.2 Run Example
-Download [KITTI sequence 05](https://drive.google.com/open?id=18ilF7GZDg2tmT6sD5pd1RjqO0XJLn9Mv), unzip and copy the file 2011_09_30_0018.bag into src/aloam_optimized/dataset/. 
+Download [KITTI sequence 05](https://drive.google.com/open?id=18ilF7GZDg2tmT6sD5pd1RjqO0XJLn9Mv) or [KITTI sequence 07](https://drive.google.com/open?id=1VpoKm7f4es4ISQ-psp4CV3iylcA4eu0-), unzip and copy the file 2011_09_30_0018.bag into src/aloam_optimized/dataset/. 
 ```
     roslaunch aloam_optimized aloam_optimized.launch
 ```
@@ -62,4 +63,5 @@ To generate rosbag file of kitti dataset, you may use the tools provided by
 
 ## 6.Acknowledgements
 Thanks for [A-LOAM](https://github.com/HKUST-Aerial-Robotics/A-LOAM) and LOAM(J. Zhang and S. Singh. LOAM: Lidar Odometry and Mapping in Real-time) and [LOAM_NOTED](https://github.com/cuitaixiang/LOAM_NOTED).
+
 
