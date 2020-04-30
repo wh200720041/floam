@@ -19,7 +19,7 @@ Computational efficiency evaluation (based on KITTI dataset):
 Platform: Intel® Core™ i7-8700 CPU @ 3.20GHz 
 | Dataset                                      | ALOAM                      | FLOAM                  |
 |----------------------------------------------|----------------------------|------------------------|
-| `KITTI sequence 02`                          | 151ms                      | 59ms                   |
+| `KITTI`                                      | 151ms                      | 59ms                   |
 
 Localization error:
 | Dataset                                      | ALOAM                      | FLOAM                  |
