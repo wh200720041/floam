@@ -1,8 +1,7 @@
 # FLOAM
-## Fast Lidar Odometry and Mapping
+## Fast Lidar Odometry And Mapping
 
-## This work is an optimied version of A-LOAM and LOAM with the computational cost reduced by 3 times
-
+This work is an optimied version of A-LOAM and LOAM with the computational cost reduced by up to 3 times.
 This code is modified from [LOAM](https://github.com/laboshinl/loam_velodyne) and [A-LOAM](https://github.com/HKUST-Aerial-Robotics/A-LOAM) .
 
 **Modifier:** [Wang Han](http://wanghan.pro), Nanyang Technological University, Singapore
@@ -42,19 +41,20 @@ Follow [Ceres Installation](http://ceres-solver.org/installation.html).
 Follow [PCL Installation](http://www.pointclouds.org/downloads/linux.html).
 
 ## 4. Build 
-### 4.1
-Clone the repository and catkin_make:
+### 4.1 Clone repository:
 ```
     cd ~/catkin_ws/src
-    git clone https://github.com/HKUST-Aerial-Robotics/A-LOAM.git
-    cd ../
+    git clone https://github.com/wh200720041/floam.git
+    cd ..
     catkin_make
     source ~/catkin_ws/devel/setup.bash
 ```
-### 4.2 Run Example
+### 4.2 Download test rosbag
 Download [KITTI sequence 05](https://drive.google.com/open?id=18ilF7GZDg2tmT6sD5pd1RjqO0XJLn9Mv) or [KITTI sequence 07](https://drive.google.com/open?id=1VpoKm7f4es4ISQ-psp4CV3iylcA4eu0-)
+
 unzip and copy the file 2011_09_30_0018.bag into src/aloam_optimized/dataset/
-run roslaunch file
+
+### 4.3 Launch ROS
 ```
     roslaunch aloam_optimized aloam_optimized.launch
 ```
