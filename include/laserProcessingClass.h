@@ -4,7 +4,6 @@
 #ifndef _LASER_PROCESSING_CLASS_H_
 #define _LASER_PROCESSING_CLASS_H_
 
-
 #include <pcl/point_cloud.h>
 #include <pcl/point_types.h>
 

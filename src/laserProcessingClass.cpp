@@ -1,37 +1,4 @@
-// This is an advanced implementation of the algorithm described in the following paper:
-//   J. Zhang and S. Singh. LOAM: Lidar Odometry and Mapping in Real-time.
-//     Robotics: Science and Systems Conference (RSS). Berkeley, CA, July 2014. 
-// Modifier of ALOAM: Tong Qin               qintonguav@gmail.com
-//                    Shaozu Cao             saozu.cao@connect.ust.hk
-// Copyright 2013, Ji Zhang, Carnegie Mellon University
-// Further contributions copyright (c) 2016, Southwest Research Institute
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are met:
-//
-// 1. Redistributions of source code must retain the above copyright notice,
-//    this list of conditions and the following disclaimer.
-// 2. Redistributions in binary form must reproduce the above copyright notice,
-//    this list of conditions and the following disclaimer in the documentation
-//    and/or other materials provided with the distribution.
-// 3. Neither the name of the copyright holder nor the names of its
-//    contributors may be used to endorse or promote products derived from this
-//    software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-// POSSIBILITY OF SUCH DAMAGE.
-
-// Author of ALOAM_Optimized: Wang Han 
+// Author of FLOAM: Wang Han 
 // Email wh200720041@gmail.com
 // Homepage https://wanghan.pro
 #include "laserProcessingClass.h"
@@ -76,7 +43,6 @@ void LaserProcessingClass::preFiltering(const pcl::PointCloud<pcl::PointXYZI>::P
 
 
 void LaserProcessingClass::featureExtraction(const pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_in, pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_out_sharp, pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_out_lessSharp, pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_out_flat, pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_out_lessFlat){
-    //这里不考虑校准问题
 
     int N_SCANS = lidar_param.num_lines;
     std::vector<pcl::PointCloud<pcl::PointXYZI>::Ptr> laserCloudScans;
@@ -111,7 +77,6 @@ void LaserProcessingClass::featureExtraction(const pcl::PointCloud<pcl::PointXYZ
             else
                 scanID = N_SCANS / 2 + int((-8.83 - angle) * 2.0 + 0.5);
 
-            // use [0 50]  > 50 remove outlies 
             if (angle > 2 || angle < -24.33 || scanID > 63 || scanID < 0)
             {
                 continue;
@@ -139,7 +104,6 @@ void LaserProcessingClass::featureExtraction(const pcl::PointCloud<pcl::PointXYZ
         }
         
         std::vector<Double2d> cloudCurvature; 
-        //cloudCurvature.clear();
         int total_points = laserCloudScans[i]->points.size()-10;
         for(int j = 5; j < (int)laserCloudScans[i]->points.size() - 5; j++){
             double diffX = laserCloudScans[i]->points[j - 5].x + laserCloudScans[i]->points[j - 4].x + laserCloudScans[i]->points[j - 3].x + laserCloudScans[i]->points[j - 2].x + laserCloudScans[i]->points[j - 1].x - 10 * laserCloudScans[i]->points[j].x + laserCloudScans[i]->points[j + 1].x + laserCloudScans[i]->points[j + 2].x + laserCloudScans[i]->points[j + 3].x + laserCloudScans[i]->points[j + 4].x + laserCloudScans[i]->points[j + 5].x;
@@ -149,8 +113,6 @@ void LaserProcessingClass::featureExtraction(const pcl::PointCloud<pcl::PointXYZ
             cloudCurvature.push_back(distance);
 
         }
-        //ROS_WARN("6dengfen %d",laserCloudScans[i].size(),i);
-        //需要6等分点
         for(int j=0;j<6;j++){
             int sector_length = (int)(total_points/6);
             int sector_start = sector_length *j;
@@ -166,8 +128,6 @@ void LaserProcessingClass::featureExtraction(const pcl::PointCloud<pcl::PointXYZ
 
     }
 
-
-    //注意这里的surfPointsLessFlatScan 是所有剩余 的点经过滤波后的结果
     downSizeFilter.setInputCloud(surf_temp);
     downSizeFilter.filter(*pc_out_lessFlat);
 
@@ -176,16 +136,14 @@ void LaserProcessingClass::featureExtraction(const pcl::PointCloud<pcl::PointXYZ
 
 void LaserProcessingClass::featureExtractionFromSector(const pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_in, std::vector<Double2d>& cloudCurvature, pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_edge_sharp, pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_edge_lessSharp, pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_surf_flat, pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_surf_lessFlat){
 
-    //std::sort (sort_id.begin(), sort_id.end(), comp);
     std::sort(cloudCurvature.begin(), cloudCurvature.end(), [](const Double2d & a, const Double2d & b)
     { 
         return a.value < b.value; 
     });
 
-    //选出对应的特征点
+
     int largestPickedNum = 0;
     std::vector<int> picked_points;
-    //ROS_WARN("max point:%f, %f",cloudCurvature[20].value,cloudCurvature[cloudCurvature.size()-21].value);
     int point_info_count =0;
     for (int i = cloudCurvature.size()-1; i >= 0; i--)
     {
@@ -246,17 +204,13 @@ void LaserProcessingClass::featureExtractionFromSector(const pcl::PointCloud<pcl
                 //ROS_WARN("extracted feature not qualified, please check lidar");
                 break;
             }
-            //if the points are not selected before, then add into library
             smallestPickedNum++;
             picked_points.push_back(ind);
-            //ROS_WARN("dfgdfr");
-
             
             if(smallestPickedNum <= 4){
                 //find all points
                 pc_surf_flat->push_back(pc_in->points[ind]);
                 pc_surf_lessFlat->push_back(pc_in->points[ind]);
-                // surfPointsLessFlatInfo.push_back(PointsInfo(scan_num, laserCloudScans_time[scan_num][ind]));
                 point_info_count++;
             }
             else{

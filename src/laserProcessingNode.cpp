@@ -8,6 +8,7 @@
 #include <mutex>
 #include <queue>
 #include <thread>
+#include <chrono>
 
 //ros lib
 #include <ros/ros.h>
@@ -46,6 +47,9 @@ void velodyneHandler(const sensor_msgs::PointCloud2ConstPtr &laserCloudMsg)
    
 }
 
+double total_time =0;
+int total_frame=0;
+
 void laser_processing(){
     while(1){
         if(!pointCloudBuf.empty()){
@@ -63,8 +67,16 @@ void laser_processing(){
             pcl::PointCloud<pcl::PointXYZI>::Ptr pointcloud_less_flat(new pcl::PointCloud<pcl::PointXYZI>());            
             pcl::PointCloud<pcl::PointXYZI>::Ptr pointcloud_flat(new pcl::PointCloud<pcl::PointXYZI>());
 
+            std::chrono::time_point<std::chrono::system_clock> start, end;
+            start = std::chrono::system_clock::now();
             laserProcessing.preFiltering(pointcloud_in, pointcloud_filtered);
             laserProcessing.featureExtraction(pointcloud_filtered,pointcloud_sharp,pointcloud_less_sharp,pointcloud_flat,pointcloud_less_flat);
+            end = std::chrono::system_clock::now();
+            std::chrono::duration<float> elapsed_seconds = end - start;
+            total_frame++;
+            float time_temp = elapsed_seconds.count() * 1000;
+            total_time+=time_temp;
+            ROS_INFO("average laser processing time %f ms \n \n", total_time/total_frame);
 
             sensor_msgs::PointCloud2 laserCloudFilteredMsg;
             pcl::toROSMsg(*pointcloud_filtered, laserCloudFilteredMsg);
