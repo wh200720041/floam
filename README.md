@@ -42,7 +42,7 @@ Follow [Ceres Installation](http://ceres-solver.org/installation.html).
 Follow [PCL Installation](http://www.pointclouds.org/downloads/linux.html).
 
 ## 4. Build 
-###4.1
+### 4.1
 Clone the repository and catkin_make:
 ```
     cd ~/catkin_ws/src
@@ -52,7 +52,9 @@ Clone the repository and catkin_make:
     source ~/catkin_ws/devel/setup.bash
 ```
 ### 4.2 Run Example
-Download [KITTI sequence 05](https://drive.google.com/open?id=18ilF7GZDg2tmT6sD5pd1RjqO0XJLn9Mv) or [KITTI sequence 07](https://drive.google.com/open?id=1VpoKm7f4es4ISQ-psp4CV3iylcA4eu0-), unzip and copy the file 2011_09_30_0018.bag into src/aloam_optimized/dataset/. 
+Download [KITTI sequence 05](https://drive.google.com/open?id=18ilF7GZDg2tmT6sD5pd1RjqO0XJLn9Mv) or [KITTI sequence 07](https://drive.google.com/open?id=1VpoKm7f4es4ISQ-psp4CV3iylcA4eu0-)
+unzip and copy the file 2011_09_30_0018.bag into src/aloam_optimized/dataset/
+run roslaunch file
 ```
     roslaunch aloam_optimized aloam_optimized.launch
 ```
