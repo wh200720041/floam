@@ -123,7 +123,7 @@ void odom_estimation(){
             transform.setOrigin( tf::Vector3(t_current.x(), t_current.y(), t_current.z()) );
             tf::Quaternion q(q_current.x(),q_current.y(),q_current.z(),q_current.w());
             transform.setRotation(q);
-            br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "map", "base_link"));
+            br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "map", "aft_mapped"));
 
             // publish odometry
             nav_msgs::Odometry laserOdometry;
