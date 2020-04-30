@@ -1,7 +1,7 @@
-# FLOAM
-## Fast Lidar Odometry And Mapping
+# FLOAM 
+## Fast LOAM (Lidar Odometry And Mapping)
 
-This work is an optimied version of A-LOAM and LOAM with the computational cost reduced by up to 3 times.
+This work is an optimized version of A-LOAM and LOAM with the computational cost reduced by up to 3 times.
 This code is modified from [LOAM](https://github.com/laboshinl/loam_velodyne) and [A-LOAM](https://github.com/HKUST-Aerial-Robotics/A-LOAM) .
 
 **Modifier:** [Wang Han](http://wanghan.pro), Nanyang Technological University, Singapore
