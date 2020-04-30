@@ -31,7 +31,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-// Author of ALOAM_Optimized: Wang Han 
+// Author of FLOAM: Wang Han 
 // Email wh200720041@gmail.com
 // Homepage https://wanghan.pro
 
