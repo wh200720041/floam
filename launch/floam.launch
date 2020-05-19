@@ -2,7 +2,7 @@
 <launch>
 
     
-    <node pkg="rosbag" type="play" name="rosbag_play" args="--clock /home/icehan/dataset/kitti/2011_09_30_0018.bag"/> 
+    <node pkg="rosbag" type="play" name="rosbag_play" args="--clock /home/icehan/dataset/2011_09_30_0018.bag"/> 
 
     <!--- Sim Time -->
     <param name="/use_sim_time" value="true" />
