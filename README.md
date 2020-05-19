@@ -14,6 +14,7 @@ This includes some optimization on the original implementation
 4. A dynamic local map is used instead of global map, in order to save memory cost. Based on massive experiments, this only has slight influence on the performance. 
 
 ## 2. Evaluation
+### 2.1. Computational efficiency evaluation
 Computational efficiency evaluation (based on KITTI dataset):
 Platform: Intel® Core™ i7-8700 CPU @ 3.20GHz 
 | Dataset                                      | ALOAM                      | FLOAM                  |
@@ -27,7 +28,15 @@ Localization error:
 | `KITTI sequence 02`                          | 3.93%                      | 1.25%                  |
 | `KITTI sequence 05`                          | 1.28%                      | 0.93%                  |
 
-<img src="https://github.com/wh200720041/floam/blob/master/img/kitti_example.gif"/>
+### 2.2. localization result
+<img width="65%" src="/img/kitti_example.gif"/>
+
+### 2.3. mapping result
+<p align='center'>
+<a href="https://youtu.be/w_R0JAymOSs">
+<img width="65%" src="/img/floam_mapping.gif"/>
+</a>
+</p>
 
 ## 3. Prerequisites
 ### 3.1 **Ubuntu** and **ROS**
@@ -68,6 +77,11 @@ And then copy the file 2011_09_30_0018.bag into ~/catkin_ws/src/floam/dataset/ (
 ```
     roslaunch floam floam.launch
 ```
+if you would like to create the map at the same time, you can run (more cpu cost)
+```
+    roslaunch floam floam_mapping.launch
+```
+
 
 ## 5. Test other sequence
 To generate rosbag file of kitti dataset, you may use the tools provided by 
@@ -75,5 +89,4 @@ To generate rosbag file of kitti dataset, you may use the tools provided by
 
 ## 6.Acknowledgements
 Thanks for [A-LOAM](https://github.com/HKUST-Aerial-Robotics/A-LOAM) and LOAM(J. Zhang and S. Singh. LOAM: Lidar Odometry and Mapping in Real-time) and [LOAM_NOTED](https://github.com/cuitaixiang/LOAM_NOTED).
-
 
