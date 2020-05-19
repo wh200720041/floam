@@ -32,6 +32,7 @@ Localization error:
 <p align='center'>
 <img width="65%" src="/img/kitti_example.gif"/>
 </p>
+
 ### 2.3. mapping result
 <p align='center'>
 <a href="https://youtu.be/w_R0JAymOSs">
