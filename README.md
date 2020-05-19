@@ -29,8 +29,9 @@ Localization error:
 | `KITTI sequence 05`                          | 1.28%                      | 0.93%                  |
 
 ### 2.2. localization result
+<p align='center'>
 <img width="65%" src="/img/kitti_example.gif"/>
-
+</p>
 ### 2.3. mapping result
 <p align='center'>
 <a href="https://youtu.be/w_R0JAymOSs">
@@ -89,4 +90,5 @@ To generate rosbag file of kitti dataset, you may use the tools provided by
 
 ## 6.Acknowledgements
 Thanks for [A-LOAM](https://github.com/HKUST-Aerial-Robotics/A-LOAM) and LOAM(J. Zhang and S. Singh. LOAM: Lidar Odometry and Mapping in Real-time) and [LOAM_NOTED](https://github.com/cuitaixiang/LOAM_NOTED).
+
 
