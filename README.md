@@ -52,6 +52,13 @@ Follow [Ceres Installation](http://ceres-solver.org/installation.html).
 ### 3.3. **PCL**
 Follow [PCL Installation](http://www.pointclouds.org/downloads/linux.html).
 
+### 3.4. **Trajectory visualization**
+For visualization purpose, this package uses hector trajectory sever, you may install the package by 
+```
+sudo apt-get install ros-melodic-hector-trajectory-server
+```
+Alternatively, you may remove the hector trajectory server node if trajectory visualization is not needed
+
 ## 4. Build 
 ### 4.1 Clone repository:
 ```
