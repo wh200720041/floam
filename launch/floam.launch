@@ -15,6 +15,7 @@
     <node pkg="floam" type="floam_odom_estimation_node" name="floam_odom_estimation_node" output="screen"/>
     <node pkg="floam" type="floam_laser_processing_node" name="floam_laser_processing_node" output="screen"/>
 
+    <node pkg="tf" type="static_transform_publisher" name="word2map_tf"  args="0 0 0 0 0 0 /world /map 10" />
     <arg name="rviz" default="true" />
     <group if="$(arg rviz)">
         <node launch-prefix="nice" pkg="rviz" type="rviz" name="rviz" args="-d $(find floam)/rviz/floam.rviz" />
