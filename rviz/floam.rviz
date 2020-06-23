@@ -70,7 +70,7 @@ Visualization Manager:
       Frames:
         All Enabled: false
         aft_mapped:
-          Value: false
+          Value: true
         cam00:
           Value: false
         cam01:
@@ -105,6 +105,9 @@ Visualization Manager:
               {}
             velodyne:
               {}
+          map:
+            aft_mapped:
+              {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -122,7 +125,7 @@ Visualization Manager:
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 0.9900000095367432
+      Max Intensity: 0.9300000071525574
       Min Color: 0; 0; 0
       Min Intensity: 0
       Name: raw_data
@@ -147,7 +150,7 @@ Visualization Manager:
       Length: 0.30000001192092896
       Line Style: Lines
       Line Width: 0.029999999329447746
-      Name: GT
+      Name: ground_truth
       Offset:
         X: 0
         Y: 0
@@ -170,7 +173,7 @@ Visualization Manager:
       Length: 0.30000001192092896
       Line Style: Lines
       Line Width: 0.029999999329447746
-      Name: aft_mapped
+      Name: floam_result
       Offset:
         X: 0
         Y: 0
@@ -220,11 +223,11 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 1.8876519203186035
+      Scale: 1.8188380002975464
       Target Frame: body
       Value: TopDownOrtho (rviz)
-      X: 124.95523834228516
-      Y: -17.003437042236328
+      X: 84.71299743652344
+      Y: -50.52915954589844
     Saved: ~
 Window Geometry:
   Displays:

@@ -6,6 +6,7 @@ Panels:
       Expanded:
         - /Global Options1
         - /TF1/Frames1
+        - /map1
       Splitter Ratio: 0.5
     Tree Height: 530
   - Class: rviz/Selection
@@ -111,8 +112,8 @@ Visualization Manager:
     - Alpha: 0.699999988079071
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 10
-        Min Value: -10
+        Max Value: 8.244071960449219
+        Min Value: -20.63126564025879
         Value: true
       Axis: Z
       Channel Name: intensity
@@ -123,7 +124,7 @@ Visualization Manager:
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 0.9900000095367432
+      Max Intensity: 0.8811999559402466
       Min Color: 0; 0; 0
       Min Intensity: 0
       Name: map
@@ -131,7 +132,7 @@ Visualization Manager:
       Queue Size: 10
       Selectable: true
       Size (Pixels): 1
-      Size (m): 0.30000001192092896
+      Size (m): 0.44999998807907104
       Style: Squares
       Topic: /map
       Unreliable: false
@@ -148,7 +149,7 @@ Visualization Manager:
       Length: 0.30000001192092896
       Line Style: Lines
       Line Width: 0.029999999329447746
-      Name: GT
+      Name: ground_truth
       Offset:
         X: 0
         Y: 0
@@ -171,7 +172,7 @@ Visualization Manager:
       Length: 0.30000001192092896
       Line Style: Lines
       Line Width: 0.029999999329447746
-      Name: aft_mapped
+      Name: floam_result
       Offset:
         X: 0
         Y: 0
@@ -212,25 +213,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/ThirdPersonFollower
-      Distance: 122.43888854980469
+      Distance: 86.67870330810547
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -51.07248306274414
-        Y: -3.4465980529785156
+        X: -35.922298431396484
+        Y: 0.5339305400848389
         Z: 6.388764450093731e-5
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.9403983354568481
+      Pitch: 0.9753983020782471
       Target Frame: body
       Value: ThirdPersonFollower (rviz)
-      Yaw: 3.025409698486328
+      Yaw: 3.310410261154175
     Saved: ~
 Window Geometry:
   Displays:

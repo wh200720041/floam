@@ -11,7 +11,9 @@
     <param name="ring_height" type="int" value="20" />
     <param name="ring_width" type="int" value="60" />
     <param name="vertical_angle" type="double" value="2.0" />
-    <!--- -->
+    <param name="max_dis" type="double" value="90.0" />
+    <param name="min_dis" type="double" value="3.0" />
+
     <node pkg="floam" type="floam_odom_estimation_node" name="floam_odom_estimation_node" output="screen"/>
     <node pkg="floam" type="floam_laser_processing_node" name="floam_laser_processing_node" output="screen"/>
     <node pkg="floam" type="floam_laser_mapping_node" name="floam_laser_mapping_node" output="screen"/>
@@ -38,3 +40,4 @@
     </node>
 
 </launch>
+

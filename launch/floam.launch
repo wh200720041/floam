@@ -2,7 +2,7 @@
 <launch>
 
     
-    <node pkg="rosbag" type="play" name="rosbag_play" args="--clock /home/icehan/dataset/2011_09_30_0018.bag"/> 
+    <node pkg="rosbag" type="play" name="rosbag_play" args="--clock $(find floam)/dataset/2011_09_30_0018.bag"/> 
 
     <!--- Sim Time -->
     <param name="/use_sim_time" value="true" />
@@ -11,10 +11,12 @@
     <param name="ring_height" type="int" value="20" />
     <param name="ring_width" type="int" value="60" />
     <param name="vertical_angle" type="double" value="2.0" />
-    <!--- -->
+    <param name="max_dis" type="double" value="90.0" />
+    <param name="min_dis" type="double" value="3.0" />
+
     <node pkg="floam" type="floam_odom_estimation_node" name="floam_odom_estimation_node" output="screen"/>
     <node pkg="floam" type="floam_laser_processing_node" name="floam_laser_processing_node" output="screen"/>
-
+    
     <node pkg="tf" type="static_transform_publisher" name="word2map_tf"  args="0 0 0 0 0 0 /world /map 10" />
     <arg name="rviz" default="true" />
     <group if="$(arg rviz)">
@@ -36,3 +38,4 @@
     </node>
 
 </launch>
+

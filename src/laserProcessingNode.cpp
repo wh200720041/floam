@@ -33,10 +33,8 @@ std::mutex mutex_lock;
 std::queue<sensor_msgs::PointCloud2ConstPtr> pointCloudBuf;
 lidar::Lidar lidar_param;
 
-ros::Publisher pubCornerPointsSharp;
-ros::Publisher pubCornerPointsLessSharp;
-ros::Publisher pubSurfPointsFlat;
-ros::Publisher pubSurfPointsLessFlat;
+ros::Publisher pubEdgePoints;
+ros::Publisher pubSurfPoints;
 ros::Publisher pubLaserCloudFiltered;
 
 void velodyneHandler(const sensor_msgs::PointCloud2ConstPtr &laserCloudMsg)
@@ -61,52 +59,40 @@ void laser_processing(){
             pointCloudBuf.pop();
             mutex_lock.unlock();
 
-            pcl::PointCloud<pcl::PointXYZI>::Ptr pointcloud_filtered(new pcl::PointCloud<pcl::PointXYZI>());
-            pcl::PointCloud<pcl::PointXYZI>::Ptr pointcloud_less_sharp(new pcl::PointCloud<pcl::PointXYZI>());
-            pcl::PointCloud<pcl::PointXYZI>::Ptr pointcloud_sharp(new pcl::PointCloud<pcl::PointXYZI>());
-            pcl::PointCloud<pcl::PointXYZI>::Ptr pointcloud_less_flat(new pcl::PointCloud<pcl::PointXYZI>());            
-            pcl::PointCloud<pcl::PointXYZI>::Ptr pointcloud_flat(new pcl::PointCloud<pcl::PointXYZI>());
+            pcl::PointCloud<pcl::PointXYZI>::Ptr pointcloud_edge(new pcl::PointCloud<pcl::PointXYZI>());          
+            pcl::PointCloud<pcl::PointXYZI>::Ptr pointcloud_surf(new pcl::PointCloud<pcl::PointXYZI>());
 
             std::chrono::time_point<std::chrono::system_clock> start, end;
             start = std::chrono::system_clock::now();
-            laserProcessing.preFiltering(pointcloud_in, pointcloud_filtered);
-            laserProcessing.featureExtraction(pointcloud_filtered,pointcloud_sharp,pointcloud_less_sharp,pointcloud_flat,pointcloud_less_flat);
+            laserProcessing.featureExtraction(pointcloud_in,pointcloud_edge,pointcloud_surf);
             end = std::chrono::system_clock::now();
             std::chrono::duration<float> elapsed_seconds = end - start;
             total_frame++;
             float time_temp = elapsed_seconds.count() * 1000;
             total_time+=time_temp;
-            ROS_INFO("average laser processing time %f ms \n \n", total_time/total_frame);
+            //ROS_INFO("average laser processing time %f ms \n \n", total_time/total_frame);
 
             sensor_msgs::PointCloud2 laserCloudFilteredMsg;
+            pcl::PointCloud<pcl::PointXYZI>::Ptr pointcloud_filtered(new pcl::PointCloud<pcl::PointXYZI>());  
+            *pointcloud_filtered+=*pointcloud_edge;
+            *pointcloud_filtered+=*pointcloud_surf;
             pcl::toROSMsg(*pointcloud_filtered, laserCloudFilteredMsg);
             laserCloudFilteredMsg.header.stamp = pointcloud_time;
             laserCloudFilteredMsg.header.frame_id = "/velodyne";
             pubLaserCloudFiltered.publish(laserCloudFilteredMsg);
 
-            sensor_msgs::PointCloud2 cornerPointsSharpMsg;
-            pcl::toROSMsg(*pointcloud_sharp, cornerPointsSharpMsg);
-            cornerPointsSharpMsg.header.stamp = pointcloud_time;
-            cornerPointsSharpMsg.header.frame_id = "/velodyne";
-            pubCornerPointsSharp.publish(cornerPointsSharpMsg);
+            sensor_msgs::PointCloud2 edgePointsMsg;
+            pcl::toROSMsg(*pointcloud_edge, edgePointsMsg);
+            edgePointsMsg.header.stamp = pointcloud_time;
+            edgePointsMsg.header.frame_id = "/velodyne";
+            pubEdgePoints.publish(edgePointsMsg);
 
-            sensor_msgs::PointCloud2 cornerPointsLessSharpMsg;
-            pcl::toROSMsg(*pointcloud_less_sharp, cornerPointsLessSharpMsg);
-            cornerPointsLessSharpMsg.header.stamp = pointcloud_time;
-            cornerPointsLessSharpMsg.header.frame_id = "/velodyne";
-            pubCornerPointsLessSharp.publish(cornerPointsLessSharpMsg);
 
-            sensor_msgs::PointCloud2 surfPointsFlatMsg;
-            pcl::toROSMsg(*pointcloud_flat, surfPointsFlatMsg);
-            surfPointsFlatMsg.header.stamp = pointcloud_time;
-            surfPointsFlatMsg.header.frame_id = "/velodyne";
-            pubSurfPointsFlat.publish(surfPointsFlatMsg);
-
-            sensor_msgs::PointCloud2 surfPointsLessFlatMsg;
-            pcl::toROSMsg(*pointcloud_less_flat, surfPointsLessFlatMsg);
-            surfPointsLessFlatMsg.header.stamp = pointcloud_time;
-            surfPointsLessFlatMsg.header.frame_id = "/velodyne";
-            pubSurfPointsLessFlat.publish(surfPointsLessFlatMsg);
+            sensor_msgs::PointCloud2 surfPointsMsg;
+            pcl::toROSMsg(*pointcloud_surf, surfPointsMsg);
+            surfPointsMsg.header.stamp = pointcloud_time;
+            surfPointsMsg.header.frame_id = "/velodyne";
+            pubSurfPoints.publish(surfPointsMsg);
 
         }
         //sleep 2 ms every time
@@ -144,13 +130,9 @@ int main(int argc, char **argv)
 
     pubLaserCloudFiltered = nh.advertise<sensor_msgs::PointCloud2>("/velodyne_points_filtered", 100);
 
-    pubCornerPointsSharp = nh.advertise<sensor_msgs::PointCloud2>("/laser_cloud_sharp", 100);
+    pubEdgePoints = nh.advertise<sensor_msgs::PointCloud2>("/laser_cloud_edge", 100);
 
-    pubCornerPointsLessSharp = nh.advertise<sensor_msgs::PointCloud2>("/laser_cloud_less_sharp", 100); 
-
-    pubSurfPointsFlat = nh.advertise<sensor_msgs::PointCloud2>("/laser_cloud_flat", 100); 
-
-    pubSurfPointsLessFlat = nh.advertise<sensor_msgs::PointCloud2>("/laser_cloud_less_flat", 100); 
+    pubSurfPoints = nh.advertise<sensor_msgs::PointCloud2>("/laser_cloud_surf", 100); 
 
     std::thread laser_processing_process{laser_processing};
 
