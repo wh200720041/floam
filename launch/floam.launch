@@ -3,13 +3,21 @@
 
     
     <node pkg="rosbag" type="play" name="rosbag_play" args="--clock $(find floam)/dataset/2011_09_30_0018.bag"/> 
+    
+    <!-- For Velodyne VLP-16 
+    <param name="scan_line" value="16" />
+    -->
+
+    <!-- For Velodyne HDL-32 
+    <param name="scan_line" value="32" />
+    -->
+
+    <!-- For Velodyne HDL-64 -->
+    <param name="scan_line" value="64" />
 
     <!--- Sim Time -->
     <param name="/use_sim_time" value="true" />
     <param name="scan_period" value="0.1" />
-    <param name="scan_line" value="64" />
-    <param name="ring_height" type="int" value="20" />
-    <param name="ring_width" type="int" value="60" />
     <param name="vertical_angle" type="double" value="2.0" />
     <param name="max_dis" type="double" value="90.0" />
     <param name="min_dis" type="double" value="3.0" />
