@@ -31,21 +31,15 @@ public:
 };
 
 
-//这里所有的数据传递全部采用指针或引用的形式来提高传递效率
 class LaserProcessingClass 
 {
     public:
     	LaserProcessingClass();
 		void init(lidar::Lidar lidar_param_in);
-		void preFiltering(const pcl::PointCloud<pcl::PointXYZI>::Ptr pc_in, pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_out);
-		void featureExtraction(const pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_in, pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_out_sharp, pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_out_lessSharp, pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_out_flat, pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_out_lessFlat);
-		void featureExtractionFromSector(const pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_in, std::vector<Double2d>& cloudCurvature, pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_edge_sharp, pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_edge_lessSharp, pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_surf_flat, pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_surf_lessFlat);	
+		void featureExtraction(const pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_in, pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_out_edge, pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_out_surf);
+		void featureExtractionFromSector(const pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_in, std::vector<Double2d>& cloudCurvature, pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_out_edge, pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_out_surf);	
 	private:
      	lidar::Lidar lidar_param;
-
-     	pcl::CropBox<pcl::PointXYZI> closePointFilter;
-     	pcl::CropBox<pcl::PointXYZI> farPointFilter;
-     	pcl::VoxelGrid<pcl::PointXYZI> downSizeFilter;
 };
 
 
