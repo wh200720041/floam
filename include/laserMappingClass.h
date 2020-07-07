@@ -38,7 +38,7 @@ class LaserMappingClass
 
     public:
     	LaserMappingClass();
-		void init(void);
+		void init(double map_resolution);
 		void updateCurrentPointsToMap(const pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_in, const Eigen::Isometry3d& pose_current);
 		pcl::PointCloud<pcl::PointXYZI>::Ptr getMap(void);
 

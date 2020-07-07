@@ -110,12 +110,13 @@ int main(int argc, char **argv)
     double scan_period= 0.1;
     double max_dis = 60.0;
     double min_dis = 2.0;
-
+    double map_resolution = 0.4;
     nh.getParam("/scan_period", scan_period); 
     nh.getParam("/vertical_angle", vertical_angle); 
     nh.getParam("/max_dis", max_dis);
     nh.getParam("/min_dis", min_dis);
     nh.getParam("/scan_line", scan_line);
+    nh.getParam("/map_resolution", map_resolution);
 
     lidar_param.setScanPeriod(scan_period);
     lidar_param.setVerticalAngle(vertical_angle);
@@ -123,7 +124,7 @@ int main(int argc, char **argv)
     lidar_param.setMaxDistance(max_dis);
     lidar_param.setMinDistance(min_dis);
 
-    laserMapping.init();
+    laserMapping.init(map_resolution);
     ros::Subscriber subLaserCloud = nh.subscribe<sensor_msgs::PointCloud2>("/velodyne_points_filtered", 100, velodyneHandler);
     ros::Subscriber subOdometry = nh.subscribe<nav_msgs::Odometry>("/odom", 100, odomCallback);
 

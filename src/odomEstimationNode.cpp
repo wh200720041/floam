@@ -123,12 +123,12 @@ void odom_estimation(){
             transform.setOrigin( tf::Vector3(t_current.x(), t_current.y(), t_current.z()) );
             tf::Quaternion q(q_current.x(),q_current.y(),q_current.z(),q_current.w());
             transform.setRotation(q);
-            br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "map", "aft_mapped"));
+            br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "map", "base_link"));
 
             // publish odometry
             nav_msgs::Odometry laserOdometry;
-            laserOdometry.header.frame_id = "/world"; 
-            laserOdometry.child_frame_id = "/aft_mapped"; 
+            laserOdometry.header.frame_id = "/map"; 
+            laserOdometry.child_frame_id = "/base_link"; 
             laserOdometry.header.stamp = pointcloud_time;
             laserOdometry.pose.pose.orientation.x = q_current.x();
             laserOdometry.pose.pose.orientation.y = q_current.y();
@@ -156,12 +156,13 @@ int main(int argc, char **argv)
     double scan_period= 0.1;
     double max_dis = 60.0;
     double min_dis = 2.0;
-
+    double map_resolution = 0.4;
     nh.getParam("/scan_period", scan_period); 
     nh.getParam("/vertical_angle", vertical_angle); 
     nh.getParam("/max_dis", max_dis);
     nh.getParam("/min_dis", min_dis);
     nh.getParam("/scan_line", scan_line);
+    nh.getParam("/map_resolution", map_resolution);
 
     lidar_param.setScanPeriod(scan_period);
     lidar_param.setVerticalAngle(vertical_angle);
@@ -169,7 +170,7 @@ int main(int argc, char **argv)
     lidar_param.setMaxDistance(max_dis);
     lidar_param.setMinDistance(min_dis);
 
-    odomEstimation.init(lidar_param);
+    odomEstimation.init(lidar_param, map_resolution);
     ros::Subscriber subLaserCloud = nh.subscribe<sensor_msgs::PointCloud2>("/velodyne_points_filtered", 100, velodyneHandler);
     ros::Subscriber subEdgeLaserCloud = nh.subscribe<sensor_msgs::PointCloud2>("/laser_cloud_edge", 100, velodyneEdgeHandler);
     ros::Subscriber subSurfLaserCloud = nh.subscribe<sensor_msgs::PointCloud2>("/laser_cloud_surf", 100, velodyneSurfHandler);

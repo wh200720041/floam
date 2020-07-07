@@ -90,13 +90,26 @@ if you would like to create the map at the same time, you can run (more cpu cost
 ```
     roslaunch floam floam_mapping.launch
 ```
+If the mapping process is slow, you may wish to change the rosbag speed by replacing "--clock -r 0.5" with "--clock -r 0.2" in your launch file, or you can change the map publish frequency manually (default is 10 Hz)
 
 
-## 5. Test other sequence
+## 5. Test on other sequence
 To generate rosbag file of kitti dataset, you may use the tools provided by 
 [kitti_to_rosbag](https://github.com/ethz-asl/kitti_to_rosbag) or [kitti2bag](https://github.com/tomas789/kitti2bag) 
 
-## 6.Acknowledgements
-Thanks for [A-LOAM](https://github.com/HKUST-Aerial-Robotics/A-LOAM) and LOAM(J. Zhang and S. Singh. LOAM: Lidar Odometry and Mapping in Real-time) and [LOAM_NOTED](https://github.com/cuitaixiang/LOAM_NOTED).
+## 6. Test on Velodyne VLP-16 or HDL-32
+You may wish to test FLOAM on your own platform and sensor such as VLP-16
+You can install the velodyne sensor driver by 
+```
+sudo apt-get install ros-melodic-velodyne-pointcloud
+```
+launch floam for your own velodyne sensor
+```
+    roslaunch floam floam_velodyne.launch
+```
+If you are using HDL-32 or other sensor, please change the scan_line in the launch file 
 
+
+## 7.Acknowledgements
+Thanks for [A-LOAM](https://github.com/HKUST-Aerial-Robotics/A-LOAM) and LOAM(J. Zhang and S. Singh. LOAM: Lidar Odometry and Mapping in Real-time) and [LOAM_NOTED](https://github.com/cuitaixiang/LOAM_NOTED).
 
