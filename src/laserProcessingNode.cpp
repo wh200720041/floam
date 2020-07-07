@@ -78,20 +78,20 @@ void laser_processing(){
             *pointcloud_filtered+=*pointcloud_surf;
             pcl::toROSMsg(*pointcloud_filtered, laserCloudFilteredMsg);
             laserCloudFilteredMsg.header.stamp = pointcloud_time;
-            laserCloudFilteredMsg.header.frame_id = "/velodyne";
+            laserCloudFilteredMsg.header.frame_id = "/base_link";
             pubLaserCloudFiltered.publish(laserCloudFilteredMsg);
 
             sensor_msgs::PointCloud2 edgePointsMsg;
             pcl::toROSMsg(*pointcloud_edge, edgePointsMsg);
             edgePointsMsg.header.stamp = pointcloud_time;
-            edgePointsMsg.header.frame_id = "/velodyne";
+            edgePointsMsg.header.frame_id = "/base_link";
             pubEdgePoints.publish(edgePointsMsg);
 
 
             sensor_msgs::PointCloud2 surfPointsMsg;
             pcl::toROSMsg(*pointcloud_surf, surfPointsMsg);
             surfPointsMsg.header.stamp = pointcloud_time;
-            surfPointsMsg.header.frame_id = "/velodyne";
+            surfPointsMsg.header.frame_id = "/base_link";
             pubSurfPoints.publish(surfPointsMsg);
 
         }
@@ -140,3 +140,4 @@ int main(int argc, char **argv)
 
     return 0;
 }
+

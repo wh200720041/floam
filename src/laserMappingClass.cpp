@@ -162,6 +162,7 @@ void LaserMappingClass::updateCurrentPointsToMap(const pcl::PointCloud<pcl::Poin
 	{
 		pcl::PointXYZI point_temp = transformed_pc->points[i];
 		//for visualization only
+		point_temp.intensity = std::min(1.0 , std::max(pc_in->points[i].z+2.0, 0.0) / 5);
 		int currentPointIdX = int(std::floor(point_temp.x / LASER_CELL_WIDTH + 0.5)) + origin_in_map_x;
 		int currentPointIdY = int(std::floor(point_temp.y / LASER_CELL_HEIGHT + 0.5)) + origin_in_map_y;
 		int currentPointIdZ = int(std::floor(point_temp.z / LASER_CELL_DEPTH + 0.5)) + origin_in_map_z;
@@ -201,3 +202,4 @@ pcl::PointCloud<pcl::PointXYZI>::Ptr LaserMappingClass::getMap(void){
 LaserMappingClass::LaserMappingClass(){
 
 }
+
