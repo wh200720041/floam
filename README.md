@@ -69,9 +69,9 @@ Unzip compressed file 2011_09_30_0018.zip. If your system does not have unzip. p
 sudo apt-get install unzip 
 ```
 
-And then copy the file 2011_09_30_0018.bag into ~/catkin_ws/src/floam/dataset/ (this may take a few minutes to unzip the file)
+And this may take a few minutes to unzip the file
 ```
-	cd ~/catkin_ws/src/floam/dataset/
+	cd ~/Downloads
 	unzip ~/Downloads/2011_09_30_0018.zip
 ```
 
@@ -102,10 +102,8 @@ launch floam for your own velodyne sensor
 ```
 If you are using HDL-32 or other sensor, please change the scan_line in the launch file 
 
-## 6. Solid state lidar
-If you would like to use solid-state lidar such as intel L515, you may want to try floam-ssl
-https://github.com/wh200720041/floam_ssl.git
 
-## 7.Acknowledgements
+## 6.Acknowledgements
 Thanks for [A-LOAM](https://github.com/HKUST-Aerial-Robotics/A-LOAM) and LOAM(J. Zhang and S. Singh. LOAM: Lidar Odometry and Mapping in Real-time) and [LOAM_NOTED](https://github.com/cuitaixiang/LOAM_NOTED).
+
 
