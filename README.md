@@ -6,6 +6,8 @@ This code is modified from [LOAM](https://github.com/laboshinl/loam_velodyne) an
 
 **Modifier:** [Wang Han](http://wanghan.pro), Nanyang Technological University, Singapore
 
+Watch our demo at [Video Link](https://youtu.be/7_7xZC0T4FY)
+
 ## 1. Evaluation
 ### 1.1. Computational efficiency evaluation
 Computational efficiency evaluation (based on KITTI dataset):
