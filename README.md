@@ -6,10 +6,12 @@ This code is modified from [LOAM](https://github.com/laboshinl/loam_velodyne) an
 
 **Modifier:** [Wang Han](http://wanghan.pro), Nanyang Technological University, Singapore
 
-Watch our demo at [Video Link](https://youtu.be/7_7xZC0T4FY)
+## 1. Demo
+Watch our demo at [Video Link](https://youtu.be/PzZly1SQtng)
 
-## 1. Evaluation
-### 1.1. Computational efficiency evaluation
+
+## 2. Evaluation
+### 2.1. Computational efficiency evaluation
 Computational efficiency evaluation (based on KITTI dataset):
 Platform: Intel® Core™ i7-8700 CPU @ 3.20GHz 
 | Dataset                                      | ALOAM                      | FLOAM                  |
@@ -23,39 +25,39 @@ Localization error:
 | `KITTI sequence 02`                          | 3.93%                      | 1.25%                  |
 | `KITTI sequence 05`                          | 1.28%                      | 0.93%                  |
 
-### 1.2. localization result
+### 2.2. localization result
 <p align='center'>
 <img width="65%" src="/img/kitti_example.gif"/>
 </p>
 
-### 1.3. mapping result
+### 2.3. mapping result
 <p align='center'>
 <a href="https://youtu.be/w_R0JAymOSs">
 <img width="65%" src="/img/floam_mapping.gif"/>
 </a>
 </p>
 
-## 2. Prerequisites
-### 2.1 **Ubuntu** and **ROS**
+## 3. Prerequisites
+### 3.1 **Ubuntu** and **ROS**
 Ubuntu 64-bit 18.04.
 
 ROS Melodic. [ROS Installation](http://wiki.ros.org/ROS/Installation)
 
-### 2.2. **Ceres Solver**
+### 3.2. **Ceres Solver**
 Follow [Ceres Installation](http://ceres-solver.org/installation.html).
 
-### 2.3. **PCL**
+### 3.3. **PCL**
 Follow [PCL Installation](http://www.pointclouds.org/downloads/linux.html).
 
-### 2.4. **Trajectory visualization**
+### 3.4. **Trajectory visualization**
 For visualization purpose, this package uses hector trajectory sever, you may install the package by 
 ```
 sudo apt-get install ros-melodic-hector-trajectory-server
 ```
 Alternatively, you may remove the hector trajectory server node if trajectory visualization is not needed
 
-## 3. Build 
-### 3.1 Clone repository:
+## 4. Build 
+### 4.1 Clone repository:
 ```
     cd ~/catkin_ws/src
     git clone https://github.com/wh200720041/floam.git
@@ -63,7 +65,7 @@ Alternatively, you may remove the hector trajectory server node if trajectory vi
     catkin_make
     source ~/catkin_ws/devel/setup.bash
 ```
-### 3.2 Download test rosbag
+### 4.2 Download test rosbag
 Download [KITTI sequence 05](https://drive.google.com/open?id=18ilF7GZDg2tmT6sD5pd1RjqO0XJLn9Mv) or [KITTI sequence 07](https://drive.google.com/open?id=1VpoKm7f4es4ISQ-psp4CV3iylcA4eu0-)
 
 Unzip compressed file 2011_09_30_0018.zip. If your system does not have unzip. please install unzip by 
@@ -77,7 +79,7 @@ And this may take a few minutes to unzip the file
 	unzip ~/Downloads/2011_09_30_0018.zip
 ```
 
-### 3.3 Launch ROS
+### 4.3 Launch ROS
 ```
     roslaunch floam floam.launch
 ```
@@ -88,11 +90,11 @@ if you would like to create the map at the same time, you can run (more cpu cost
 If the mapping process is slow, you may wish to change the rosbag speed by replacing "--clock -r 0.5" with "--clock -r 0.2" in your launch file, or you can change the map publish frequency manually (default is 10 Hz)
 
 
-## 4. Test on other sequence
+## 5. Test on other sequence
 To generate rosbag file of kitti dataset, you may use the tools provided by 
 [kitti_to_rosbag](https://github.com/ethz-asl/kitti_to_rosbag) or [kitti2bag](https://github.com/tomas789/kitti2bag) 
 
-## 5. Test on Velodyne VLP-16 or HDL-32
+## 6. Test on Velodyne VLP-16 or HDL-32
 You may wish to test FLOAM on your own platform and sensor such as VLP-16
 You can install the velodyne sensor driver by 
 ```
@@ -105,7 +107,7 @@ launch floam for your own velodyne sensor
 If you are using HDL-32 or other sensor, please change the scan_line in the launch file 
 
 
-## 6.Acknowledgements
+## 7.Acknowledgements
 Thanks for [A-LOAM](https://github.com/HKUST-Aerial-Robotics/A-LOAM) and LOAM(J. Zhang and S. Singh. LOAM: Lidar Odometry and Mapping in Real-time) and [LOAM_NOTED](https://github.com/cuitaixiang/LOAM_NOTED).
 
 
