@@ -30,7 +30,6 @@ OdomEstimationClass odomEstimation;
 std::mutex mutex_lock;
 std::queue<sensor_msgs::PointCloud2ConstPtr> pointCloudEdgeBuf;
 std::queue<sensor_msgs::PointCloud2ConstPtr> pointCloudSurfBuf;
-std::queue<sensor_msgs::PointCloud2ConstPtr> pointCloudBuf;
 lidar::Lidar lidar_param;
 
 ros::Publisher pubLaserOdometry;
@@ -46,39 +45,26 @@ void velodyneEdgeHandler(const sensor_msgs::PointCloud2ConstPtr &laserCloudMsg)
     pointCloudEdgeBuf.push(laserCloudMsg);
     mutex_lock.unlock();
 }
-void velodyneHandler(const sensor_msgs::PointCloud2ConstPtr &laserCloudMsg)
-{
-    mutex_lock.lock();
-    pointCloudBuf.push(laserCloudMsg);
-    mutex_lock.unlock();
-}
 
 bool is_odom_inited = false;
 double total_time =0;
 int total_frame=0;
 void odom_estimation(){
     while(1){
-        if(!pointCloudEdgeBuf.empty() && !pointCloudSurfBuf.empty()&& !pointCloudBuf.empty()){
+        if(!pointCloudEdgeBuf.empty() && !pointCloudSurfBuf.empty()){
 
             //read data
             mutex_lock.lock();
-            if(!pointCloudBuf.empty() && (pointCloudBuf.front()->header.stamp.toSec()<pointCloudSurfBuf.front()->header.stamp.toSec()-0.5*lidar_param.scan_period || pointCloudBuf.front()->header.stamp.toSec()<pointCloudEdgeBuf.front()->header.stamp.toSec()-0.5*lidar_param.scan_period)){
-                ROS_WARN("time stamp unaligned error and odom discarded, pls check your data --> odom correction"); 
-                pointCloudBuf.pop();
-                mutex_lock.unlock();
-                continue;              
-            }
-
-            if(!pointCloudSurfBuf.empty() && (pointCloudSurfBuf.front()->header.stamp.toSec()<pointCloudBuf.front()->header.stamp.toSec()-0.5*lidar_param.scan_period || pointCloudSurfBuf.front()->header.stamp.toSec()<pointCloudEdgeBuf.front()->header.stamp.toSec()-0.5*lidar_param.scan_period)){
+            if(!pointCloudSurfBuf.empty() && (pointCloudSurfBuf.front()->header.stamp.toSec()<pointCloudEdgeBuf.front()->header.stamp.toSec()-0.5*lidar_param.scan_period)){
                 pointCloudSurfBuf.pop();
-                ROS_INFO("time stamp unaligned with extra point cloud, pls check your data --> odom correction");
+                ROS_WARN_ONCE("time stamp unaligned with extra point cloud, pls check your data --> odom correction");
                 mutex_lock.unlock();
                 continue;  
             }
 
-            if(!pointCloudEdgeBuf.empty() && (pointCloudEdgeBuf.front()->header.stamp.toSec()<pointCloudBuf.front()->header.stamp.toSec()-0.5*lidar_param.scan_period || pointCloudEdgeBuf.front()->header.stamp.toSec()<pointCloudSurfBuf.front()->header.stamp.toSec()-0.5*lidar_param.scan_period)){
+            if(!pointCloudEdgeBuf.empty() && (pointCloudEdgeBuf.front()->header.stamp.toSec()<pointCloudSurfBuf.front()->header.stamp.toSec()-0.5*lidar_param.scan_period)){
                 pointCloudEdgeBuf.pop();
-                ROS_INFO("time stamp unaligned with extra point cloud, pls check your data --> odom correction");
+                ROS_WARN_ONCE("time stamp unaligned with extra point cloud, pls check your data --> odom correction");
                 mutex_lock.unlock();
                 continue;  
             }
@@ -86,14 +72,11 @@ void odom_estimation(){
 
             pcl::PointCloud<pcl::PointXYZI>::Ptr pointcloud_surf_in(new pcl::PointCloud<pcl::PointXYZI>());
             pcl::PointCloud<pcl::PointXYZI>::Ptr pointcloud_edge_in(new pcl::PointCloud<pcl::PointXYZI>());
-            pcl::PointCloud<pcl::PointXYZI>::Ptr pointcloud_in(new pcl::PointCloud<pcl::PointXYZI>());
             pcl::fromROSMsg(*pointCloudEdgeBuf.front(), *pointcloud_edge_in);
             pcl::fromROSMsg(*pointCloudSurfBuf.front(), *pointcloud_surf_in);
-            pcl::fromROSMsg(*pointCloudBuf.front(), *pointcloud_in);
-            ros::Time pointcloud_time = (pointCloudBuf.front())->header.stamp;
+            ros::Time pointcloud_time = (pointCloudSurfBuf.front())->header.stamp;
             pointCloudEdgeBuf.pop();
             pointCloudSurfBuf.pop();
-            pointCloudBuf.pop();
             mutex_lock.unlock();
 
             if(is_odom_inited == false){
@@ -171,7 +154,6 @@ int main(int argc, char **argv)
     lidar_param.setMinDistance(min_dis);
 
     odomEstimation.init(lidar_param, map_resolution);
-    ros::Subscriber subLaserCloud = nh.subscribe<sensor_msgs::PointCloud2>("/velodyne_points_filtered", 100, velodyneHandler);
     ros::Subscriber subEdgeLaserCloud = nh.subscribe<sensor_msgs::PointCloud2>("/laser_cloud_edge", 100, velodyneEdgeHandler);
     ros::Subscriber subSurfLaserCloud = nh.subscribe<sensor_msgs::PointCloud2>("/laser_cloud_surf", 100, velodyneSurfHandler);
 
@@ -182,3 +164,4 @@ int main(int argc, char **argv)
 
     return 0;
 }
+
