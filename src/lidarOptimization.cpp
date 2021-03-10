@@ -15,40 +15,36 @@ bool EdgeAnalyticCostFunction::Evaluate(double const *const *parameters, double 
     Eigen::Map<const Eigen::Quaterniond> q_last_curr(parameters[0]);
     Eigen::Map<const Eigen::Vector3d> t_last_curr(parameters[0] + 4);
     Eigen::Vector3d lp;
-    lp = q_last_curr * curr_point + t_last_curr; //new point
+    lp = q_last_curr * curr_point + t_last_curr; 
+
     Eigen::Vector3d nu = (lp - last_point_a).cross(lp - last_point_b);
     Eigen::Vector3d de = last_point_a - last_point_b;
-
-    residuals[0] = nu.x() / de.norm();
-    residuals[1] = nu.y() / de.norm();
-    residuals[2] = nu.z() / de.norm();
-
+    double de_norm = de.norm();
+    residuals[0] = nu.norm()/de_norm;
+    
     if(jacobians != NULL)
     {
         if(jacobians[0] != NULL)
         {
             Eigen::Matrix3d skew_lp = skew(lp);
-            Eigen::Matrix<double, 3, 6> dp_by_so3;
-            dp_by_so3.block<3,3>(0,0) = -skew_lp;
-            (dp_by_so3.block<3,3>(0, 3)).setIdentity();
-            Eigen::Map<Eigen::Matrix<double, 3, 7, Eigen::RowMajor> > J_se3(jacobians[0]);
+            Eigen::Matrix<double, 3, 6> dp_by_se3;
+            dp_by_se3.block<3,3>(0,0) = -skew_lp;
+            (dp_by_se3.block<3,3>(0, 3)).setIdentity();
+            Eigen::Map<Eigen::Matrix<double, 1, 7, Eigen::RowMajor> > J_se3(jacobians[0]);
             J_se3.setZero();
-            Eigen::Vector3d re = last_point_b - last_point_a;
-            Eigen::Matrix3d skew_re = skew(re);
-
-            J_se3.block<3,6>(0,0) = skew_re * dp_by_so3/de.norm();
+            Eigen::Matrix3d skew_de = skew(de);
+            J_se3.block<1,6>(0,0) = - nu.transpose() / nu.norm() * skew_de * dp_by_se3/de_norm;
       
         }
-    }
+    }  
 
     return true;
  
 }   
 
-//surf norm cost
 
 SurfNormAnalyticCostFunction::SurfNormAnalyticCostFunction(Eigen::Vector3d curr_point_, Eigen::Vector3d plane_unit_norm_, double negative_OA_dot_norm_) 
-                                                        : curr_point(curr_point_), plane_unit_norm(plane_unit_norm_), negative_OA_dot_norm(negative_OA_dot_norm_) {
+                                                        : curr_point(curr_point_), plane_unit_norm(plane_unit_norm_), negative_OA_dot_norm(negative_OA_dot_norm_){
 
 }
 
@@ -57,7 +53,6 @@ bool SurfNormAnalyticCostFunction::Evaluate(double const *const *parameters, dou
     Eigen::Map<const Eigen::Quaterniond> q_w_curr(parameters[0]);
     Eigen::Map<const Eigen::Vector3d> t_w_curr(parameters[0] + 4);
     Eigen::Vector3d point_w = q_w_curr * curr_point + t_w_curr;
-
     residuals[0] = plane_unit_norm.dot(point_w) + negative_OA_dot_norm;
 
     if(jacobians != NULL)
@@ -65,13 +60,12 @@ bool SurfNormAnalyticCostFunction::Evaluate(double const *const *parameters, dou
         if(jacobians[0] != NULL)
         {
             Eigen::Matrix3d skew_point_w = skew(point_w);
-
-            Eigen::Matrix<double, 3, 6> dp_by_so3;
-            dp_by_so3.block<3,3>(0,0) = -skew_point_w;
-            (dp_by_so3.block<3,3>(0, 3)).setIdentity();
+            Eigen::Matrix<double, 3, 6> dp_by_se3;
+            dp_by_se3.block<3,3>(0,0) = -skew_point_w;
+            (dp_by_se3.block<3,3>(0, 3)).setIdentity();
             Eigen::Map<Eigen::Matrix<double, 1, 7, Eigen::RowMajor> > J_se3(jacobians[0]);
             J_se3.setZero();
-            J_se3.block<1,6>(0,0) = plane_unit_norm.transpose() * dp_by_so3;
+            J_se3.block<1,6>(0,0) = plane_unit_norm.transpose() * dp_by_se3;
    
         }
     }
@@ -97,7 +91,6 @@ bool PoseSE3Parameterization::Plus(const double *x, const double *delta, double 
     return true;
 }
 
-
 bool PoseSE3Parameterization::ComputeJacobian(const double *x, double *jacobian) const
 {
     Eigen::Map<Eigen::Matrix<double, 7, 6, Eigen::RowMajor>> j(jacobian);
@@ -106,7 +99,6 @@ bool PoseSE3Parameterization::ComputeJacobian(const double *x, double *jacobian)
 
     return true;
 }
-
 
 void getTransformFromSe3(const Eigen::Matrix<double,6,1>& se3, Eigen::Quaterniond& q, Eigen::Vector3d& t){
     Eigen::Vector3d omega(se3.data());

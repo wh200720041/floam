@@ -13,7 +13,7 @@ void getTransformFromSe3(const Eigen::Matrix<double,6,1>& se3, Eigen::Quaternion
 
 Eigen::Matrix3d skew(Eigen::Vector3d& mat_in);
 
-class EdgeAnalyticCostFunction : public ceres::SizedCostFunction<3, 7> {
+class EdgeAnalyticCostFunction : public ceres::SizedCostFunction<1, 7> {
 	public:
 
 		EdgeAnalyticCostFunction(Eigen::Vector3d curr_point_, Eigen::Vector3d last_point_a_, Eigen::Vector3d last_point_b_);
