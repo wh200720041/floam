@@ -8,12 +8,10 @@ This code is modified from [LOAM](https://github.com/laboshinl/loam_velodyne) an
 
 Watch our demo at [Video Link](https://youtu.be/PzZly1SQtng)
 
-## 1. Modification Highlights
-This includes some optimization on the original implementation
-1. Analytic methods is used instead of auto differentiation. This is performed on se3
-2. Use linear motion prediction model to estimate the initial pose
-3. Laser odometry and laser mapping are merged 
-4. A dynamic local map is used instead of global map, in order to save memory cost. Based on massive experiments, this only has slight influence on the performance. 
+## 1. Highlights
+<p align='center'>
+<img width="65%" src="/img/floam_kitti.gif"/>
+</p>
 
 ## 2. Evaluation
 ### 2.1. Computational efficiency evaluation
