@@ -6,9 +6,14 @@ This code is modified from [LOAM](https://github.com/laboshinl/loam_velodyne) an
 
 **Modifier:** [Wang Han](http://wanghan.pro), Nanyang Technological University, Singapore
 
-## 1. Demo
 Watch our demo at [Video Link](https://youtu.be/PzZly1SQtng)
 
+## 1. Modification Highlights
+This includes some optimization on the original implementation
+1. Analytic methods is used instead of auto differentiation. This is performed on se3
+2. Use linear motion prediction model to estimate the initial pose
+3. Laser odometry and laser mapping are merged 
+4. A dynamic local map is used instead of global map, in order to save memory cost. Based on massive experiments, this only has slight influence on the performance. 
 
 ## 2. Evaluation
 ### 2.1. Computational efficiency evaluation
@@ -66,7 +71,7 @@ Alternatively, you may remove the hector trajectory server node if trajectory vi
     source ~/catkin_ws/devel/setup.bash
 ```
 ### 4.2 Download test rosbag
-Download [KITTI sequence 05](https://drive.google.com/open?id=18ilF7GZDg2tmT6sD5pd1RjqO0XJLn9Mv) or [KITTI sequence 07](https://drive.google.com/open?id=1VpoKm7f4es4ISQ-psp4CV3iylcA4eu0-)
+Download [KITTI sequence 05](https://drive.google.com/file/d/1eyO0Io3lX2z-yYsfGHawMKZa5Z0uYJ0W/view?usp=sharing) or [KITTI sequence 07](https://drive.google.com/file/d/1_qUfwUw88rEKitUpt1kjswv7Cv4GPs0b/view?usp=sharing)
 
 Unzip compressed file 2011_09_30_0018.zip. If your system does not have unzip. please install unzip by 
 ```
@@ -109,5 +114,4 @@ If you are using HDL-32 or other sensor, please change the scan_line in the laun
 
 ## 7.Acknowledgements
 Thanks for [A-LOAM](https://github.com/HKUST-Aerial-Robotics/A-LOAM) and LOAM(J. Zhang and S. Singh. LOAM: Lidar Odometry and Mapping in Real-time) and [LOAM_NOTED](https://github.com/cuitaixiang/LOAM_NOTED).
-
 
