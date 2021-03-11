@@ -6,11 +6,12 @@ This code is modified from [LOAM](https://github.com/laboshinl/loam_velodyne) an
 
 **Modifier:** [Wang Han](http://wanghan.pro), Nanyang Technological University, Singapore
 
+## 1. Demo Highlights
 Watch our demo at [Video Link](https://youtu.be/PzZly1SQtng)
-
-## 1. Highlights
 <p align='center'>
+<a href="https://youtu.be/PzZly1SQtng">
 <img width="65%" src="/img/floam_kitti.gif"/>
+</a>
 </p>
 
 ## 2. Evaluation
