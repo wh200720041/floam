@@ -12,7 +12,7 @@ void LaserProcessingClass::init(lidar::Lidar lidar_param_in){
 void LaserProcessingClass::featureExtraction(const pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_in, pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_out_edge, pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_out_surf){
 
     std::vector<int> indices;
-    pcl::removeNaNFromPointCloud(*pc_in, indices);
+    pcl::removeNaNFromPointCloud(*pc_in, *pc_in, indices);
 
 
     int N_SCANS = lidar_param.num_lines;
