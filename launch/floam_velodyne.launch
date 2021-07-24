@@ -1,13 +1,9 @@
 <?xml version="1.0"?>
 <launch>
 
-    <!-- launch your velodyne here -->
-    <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch"/>
-    
     <!-- For Velodyne VLP-16 -->
     <param name="scan_line" value="16" />
     
-
     <!-- For Velodyne HDL-32 
     <param name="scan_line" value="32" />
     -->

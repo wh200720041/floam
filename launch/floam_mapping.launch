@@ -1,9 +1,6 @@
 <?xml version="1.0"?>
 <launch>
 
-    
-    <node pkg="rosbag" type="play" name="rosbag_play" args="--clock -r 0.5 $(env HOME)/Downloads/2011_09_30_0018.bag"/> 
-    
     <!-- For Velodyne VLP-16 
     <param name="scan_line" value="16" />
     -->
