@@ -10,11 +10,10 @@ find_package(catkin REQUIRED COMPONENTS
   nav_msgs
   sensor_msgs
   roscpp
-  rospy
-  rosbag
   std_msgs
   tf
   eigen_conversions
+  pcl_ros
 )
 
 find_package(Eigen3)
@@ -45,11 +44,19 @@ link_directories(
   ${CERES_LIBRARY_DIRS}
 )
 
-
 catkin_package(
-  CATKIN_DEPENDS geometry_msgs nav_msgs roscpp rospy std_msgs
-  DEPENDS EIGEN3 PCL Ceres 
   INCLUDE_DIRS include
+  DEPENDS EIGEN3 PCL Ceres 
+  CATKIN_DEPENDS
+  geometry_msgs
+  nav_msgs
+  roscpp
+  std_msgs
+  geometry_msgs
+  sensor_msgs
+  tf
+  eigen_conversions
+  pcl_ros
 )
 
 add_executable(${PROJECT_NAME}_laser_processing_node src/laserProcessingNode.cpp src/laserProcessingClass.cpp src/lidar.cpp)
