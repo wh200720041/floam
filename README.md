@@ -114,3 +114,16 @@ If you are using HDL-32 or other sensor, please change the scan_line in the laun
 ## 7.Acknowledgements
 Thanks for [A-LOAM](https://github.com/HKUST-Aerial-Robotics/A-LOAM) and LOAM(J. Zhang and S. Singh. LOAM: Lidar Odometry and Mapping in Real-time) and [LOAM_NOTED](https://github.com/cuitaixiang/LOAM_NOTED).
 
+
+## 8. Citation
+If you use this work for your research, you may want to cite
+```
+@inproceedings{wang2021,
+  author={H. {Wang} and C. {Wang} and C. {Chen} and L. {Xie}},
+  booktitle={2021 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)}, 
+  title={F-LOAM : Fast LiDAR Odometry and Mapping}, 
+  year={2020},
+  volume={},
+  number={}
+}
+```
