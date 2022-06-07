@@ -18,6 +18,7 @@ This repository is a modified LiDAR-inertial odometry system, which is developed
 <img src="./img/result.png" width="500px">
 </div>
 
+
 ## demo
 
 **Test with kitti data**
@@ -27,6 +28,25 @@ This repository is a modified LiDAR-inertial odometry system, which is developed
 <div align="center">
 <img src="./img/kitti_test.png" width="1000px">
 </div>
+
+## Install
+
+Use the following commands to download and compile the package.
+
+```
+cd ~/catkin_ws/src
+git clone https://github.com/chengwei0427/floam_g2o.git
+cd ..
+catkin_make 
+```
+
+## Other notes
+
+1. you should change the cmakelist, find the right dependencies; **I think you can finish the work yourself**
+
+2.you could (W/O)comment the **#define USE_G2O** in **odomEstimationClass.h** to G2o or Ceres(original) method;
+
+3. you could modify the params in **floam_mapping.launch**  to set whether to save the gt-traj or laserodom-traj.
 
 ## TODO
 

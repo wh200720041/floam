@@ -49,7 +49,7 @@
         <param name="/trajectory_update_rate" value="10.0" />
         <param name="/trajectory_publish_rate" value="10.0" />
     </node>
-    
+    <!-- change source_frame_name to record different trajectory here -->
     <node pkg="$(arg project)" type="recordTrajNode" name="recordTrajNode" output="screen">
         <param name="/target_frame_name" value="world" />
         <param name="/source_frame_name" value="base_link" />
