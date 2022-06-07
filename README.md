@@ -28,6 +28,10 @@ This repository is a modified LiDAR-inertial odometry system, which is developed
 <img src="./img/kitti_test.png" width="1000px">
 </div>
 
+## TODO
+
+  - [ ] [add right perturbation]
+  
 --------------=----------------------------  divide line  ----------------------------------------------
 
 # FLOAM 
