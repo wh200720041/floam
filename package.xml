@@ -1,38 +1,29 @@
 <?xml version="1.0"?>
-<package>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
   <name>floam</name>
   <version>0.0.0</version>
+  <description>TODO: Package description</description>
+  <maintainer email="yi-chen.zhang@isza.com">yi-chen</maintainer>
+  <license>TODO: License declaration</license>
 
-  <description>
-    This work is created based on some optimization on ALOAM by HKUST and LOAM by CMU
-  </description>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <depend>rclcpp</depend>
+  <depend>sensor_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>tf2</depend>
+  <depend>tf2_ros</depend>
+  <depend>pcl_conversions</depend>
+  <depend>PCL</depend>
+  <depend>Eigen3</depend>
 
-  <maintainer email="wh200720041@gmail.com">Han Wang</maintainer>
+  <exec_depend>ros2launch</exec_depend>
 
-  <license>BSD</license>
-  <url>https://wanghan.pro</url>
-  <author email="wh200720041@gmail.com">Han Wang</author>
-  
-  <buildtool_depend>catkin</buildtool_depend>
-  <build_depend>geometry_msgs</build_depend>
-  <build_depend>nav_msgs</build_depend>
-  <build_depend>roscpp</build_depend>
-  <build_depend>rospy</build_depend>
-  <build_depend>std_msgs</build_depend>  
-  <build_depend>rosbag</build_depend>
-  <build_depend>sensor_msgs</build_depend>
-  <build_depend>tf</build_depend>
-  <build_depend>eigen_conversions</build_depend>
-  <run_depend>geometry_msgs</run_depend>
-  <run_depend>nav_msgs</run_depend>
-  <run_depend>sensor_msgs</run_depend>
-  <run_depend>roscpp</run_depend>
-  <run_depend>rospy</run_depend>
-  <run_depend>std_msgs</run_depend>
-  <run_depend>rosbag</run_depend>
-  <run_depend>tf</run_depend>
-  <run_depend>eigen_conversions</run_depend>
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
 
   <export>
+    <build_type>ament_cmake</build_type>
   </export>
 </package>
