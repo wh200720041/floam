@@ -1,8 +1,11 @@
 cmake_minimum_required(VERSION 2.8.3)
+if (POLICY CMP0048)
+  cmake_policy(SET CMP0048 NEW)
+endif (POLICY CMP0048)
 project(floam)
 
 set(CMAKE_BUILD_TYPE "Release")
-set(CMAKE_CXX_FLAGS "-std=c++11")
+set(CMAKE_CXX_FLAGS "-std=c++14")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3 -Wall -g")
 
 find_package(catkin REQUIRED COMPONENTS
@@ -28,8 +31,10 @@ if(NOT EIGEN3_FOUND)
 else()
   set(EIGEN3_INCLUDE_DIRS ${EIGEN3_INCLUDE_DIR})
 endif()
-find_package(PCL REQUIRED)
+set(PCL_DIR "/usr/include/pcl-1.10")
+find_package(PCL 1.10 REQUIRED)
 find_package(Ceres REQUIRED)
+find_package(CUDA REQUIRED)
 
 include_directories(
   include
@@ -62,4 +67,3 @@ target_link_libraries(floam_odom_estimation_node ${EIGEN3_LIBRARIES} ${catkin_LI
 
 add_executable(floam_laser_mapping_node src/laserMappingNode.cpp src/laserMappingClass.cpp src/lidar.cpp)
 target_link_libraries(floam_laser_mapping_node ${EIGEN3_LIBRARIES} ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${CERES_LIBRARIES})
-
