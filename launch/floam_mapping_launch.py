@@ -24,8 +24,15 @@ def generate_launch_description():
     parameters=[params]
   )
 
+  laser_mapping_node = Node(
+    package="floam",
+    executable="laser_mapping_node",
+    name="laser_mapping_node",
+    parameters=[params]
+  )
+
   bag_exec = ExecuteProcess(
-    cmd=["ros2", "bag", "play", "-r", "0.85", "/data/rosbag/Kitti/2011_09_30_0018"]
+    cmd=["ros2", "bag", "play", "-r", "0.5", "/data/Kitti/raw/2011_09_30_0018"]
   )
 
   tf_node = Node(
@@ -39,13 +46,14 @@ def generate_launch_description():
     package="rviz2",
     executable="rviz2",
     name="rviz2",
-    arguments=["-d", join(get_package_share_directory("floam"), "rviz/", "floam.rviz")]
+    arguments=["-d", join(get_package_share_directory("floam"), "rviz/", "floam_mapping.rviz")]
   )
 
   return LaunchDescription([
     laser_processing_node,
     odom_estimation_node,
+    laser_mapping_node,
     bag_exec,
     tf_node,
-    rviz_node
+    rviz_node,
   ])

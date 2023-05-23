@@ -147,7 +147,7 @@ void OdomEstimationClass::addEdgeCostFactor(const pcl::PointCloud<pcl::PointXYZI
 void OdomEstimationClass::addSurfCostFactor(const pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_in,
   const pcl::PointCloud<pcl::PointXYZI>::Ptr& map_in, ceres::Problem& problem, ceres::LossFunction *loss_function)
 {
-  int surf_num=0;
+  int surf_num = 0;
   for (int i = 0; i < (int)pc_in->points.size(); i++) {
     pcl::PointXYZI point_temp;
     pointAssociateToMap(&(pc_in->points[i]), &point_temp);
