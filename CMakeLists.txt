@@ -1,17 +1,23 @@
-cmake_minimum_required(VERSION 2.8.3)
+#cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.5)
 project(floam)
 
 set(CMAKE_BUILD_TYPE "Release")
 set(CMAKE_CXX_FLAGS "-std=c++11")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3 -Wall -g")
 
-find_package(catkin REQUIRED COMPONENTS
+set(CMAKE_CXX_STANDARD 14)
+
+# find dependencies
+
+find_package(ament_cmake REQUIRED COMPONENTS
   geometry_msgs
   nav_msgs
   sensor_msgs
-  roscpp
-  rospy
-  rosbag
+  rclcpp
+  #roscpp
+  #rospy
+  #rosbag
   std_msgs
   tf
   eigen_conversions

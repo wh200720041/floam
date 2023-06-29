@@ -31,7 +31,8 @@
 //LOCAL LIB
 #include "lidar.h"
 #include "lidarOptimization.h"
-#include <ros/ros.h>
+//#include <ros/ros.h>
+#include <rclcpp/rclcpp.hpp>
 
 class OdomEstimationClass 
 {

@@ -5,6 +5,7 @@
 
   <description>
     This work is created based on some optimization on ALOAM by HKUST and LOAM by CMU
+    ROS2 porting by chrissunny94
   </description>
 
   <maintainer email="wh200720041@gmail.com">Han Wang</maintainer>
@@ -13,7 +14,8 @@
   <url>https://wanghan.pro</url>
   <author email="wh200720041@gmail.com">Han Wang</author>
   
-  <buildtool_depend>catkin</buildtool_depend>
+  <!-- <buildtool_depend>catkin</buildtool_depend> -->
+  <buildtool_depend>ament_cmake</buildtool_depend>
   <build_depend>geometry_msgs</build_depend>
   <build_depend>nav_msgs</build_depend>
   <build_depend>roscpp</build_depend>
@@ -29,7 +31,7 @@
   <run_depend>roscpp</run_depend>
   <run_depend>rospy</run_depend>
   <run_depend>std_msgs</run_depend>
-  <run_depend>rosbag</run_depend>
+  <!-- <run_depend>rosbag</run_depend> -->
   <run_depend>tf</run_depend>
   <run_depend>eigen_conversions</run_depend>
 
