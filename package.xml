@@ -14,27 +14,30 @@
   <url>https://wanghan.pro</url>
   <author email="wh200720041@gmail.com">Han Wang</author>
   
-  <!-- <buildtool_depend>catkin</buildtool_depend> -->
   <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>ament_cmake_auto</buildtool_depend>
+  
+  <build_depend>launch</build_depend>
+  <build_depend>launch_ros</build_depend>
   <build_depend>geometry_msgs</build_depend>
   <build_depend>nav_msgs</build_depend>
-  <build_depend>roscpp</build_depend>
-  <build_depend>rospy</build_depend>
+  <build_depend>rclcpp</build_depend>
+  <build_depend>rclpy</build_depend>
   <build_depend>std_msgs</build_depend>  
-  <build_depend>rosbag</build_depend>
   <build_depend>sensor_msgs</build_depend>
   <build_depend>tf</build_depend>
   <build_depend>eigen_conversions</build_depend>
   <run_depend>geometry_msgs</run_depend>
   <run_depend>nav_msgs</run_depend>
   <run_depend>sensor_msgs</run_depend>
-  <run_depend>roscpp</run_depend>
-  <run_depend>rospy</run_depend>
+  <run_depend>rclcpp</run_depend>
+  <run_depend>rclpy</run_depend>
   <run_depend>std_msgs</run_depend>
-  <!-- <run_depend>rosbag</run_depend> -->
   <run_depend>tf</run_depend>
   <run_depend>eigen_conversions</run_depend>
+  <run_depend>ros2launch</run_depend>
 
   <export>
+    <build_type>ament_cmake</build_type>
   </export>
 </package>

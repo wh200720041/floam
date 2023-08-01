@@ -11,7 +11,6 @@
 #include <chrono>
 
 //ros lib
-//#include <ros/ros.h>
 #include "rclcpp/rclcpp.hpp"
 #include <sensor_msgs/PointCloud2.h>
 #include <nav_msgs/Odometry.h>

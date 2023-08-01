@@ -1,32 +1,28 @@
-#cmake_minimum_required(VERSION 2.8.3)
 cmake_minimum_required(VERSION 3.5)
 project(floam)
 
-# Default to C++14
-if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 14)
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-set(CMAKE_BUILD_TYPE "Release")
-set(CMAKE_CXX_FLAGS "-std=c++11")
-set(CMAKE_CXX_FLAGS_RELEASE "-O3 -Wall -g")
-
-
 # find dependencies
-find_package(ament_cmake REQUIRED COMPONENTS
-  geometry_msgs
-  nav_msgs
-  sensor_msgs
-  rclcpp
-  #roscpp
-  #rospy
-  #rosbag
-  std_msgs
-  tf
-  eigen_conversions
-)
 
-find_package(Eigen3)
+find_package(ament_cmake REQUIRED  )
+find_package(geometry_msgs REQUIRED )
+find_package(nav_msgs REQUIRED )
+find_package(sensor_msgs REQUIRED )
+find_package(rclcpp REQUIRED )
+find_package(std_msgs REQUIRED )
+find_package(tf2 REQUIRED )
+find_package(tf2_ros REQUIRED )
+find_package(tf2_geometry_msgs REQUIRED )
+find_package(pcl_conversions REQUIRED )
+find_package(pcl_ros REQUIRED )
+find_package(Eigen3 REQUIRED)
+find_package(Ceres REQUIRED )
+
+
+
 if(NOT EIGEN3_FOUND)
   # Fallback to cmake_modules
   find_package(cmake_modules REQUIRED)
@@ -42,7 +38,6 @@ find_package(Ceres REQUIRED)
 
 include_directories(
   include
-  #${catkin_INCLUDE_DIRS} 
   ${PCL_INCLUDE_DIRS}
   ${CERES_INCLUDE_DIRS}
   ${EIGEN3_INCLUDE_DIRS}
@@ -55,13 +50,6 @@ link_directories(
   ${CERES_LIBRARY_DIRS}
 )
 
-
-# catkin_package(
-#   CATKIN_DEPENDS geometry_msgs nav_msgs roscpp rospy std_msgs
-#   DEPENDS EIGEN3 PCL Ceres 
-#   INCLUDE_DIRS include
-#)
-
 set(dependencies
   rclcpp
   std_msgs
@@ -71,24 +59,41 @@ set(dependencies
   tf2
   tf2_ros
   tf2_geometry_msgs
+  pcl_ros
   pcl_conversions
+  Ceres
+  Eigen3
 )
 
 
 
 add_executable(floam_laser_processing_node src/laserProcessingNode.cpp src/laserProcessingClass.cpp src/lidar.cpp)
-#target_link_libraries(floam_laser_processing_node ${EIGEN3_LIBRARIES} ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${CERES_LIBRARIES})
-target_link_libraries(floam_laser_processing_node ${EIGEN3_LIBRARIES}  ${PCL_LIBRARIES} ${CERES_LIBRARIES})
-#ament_target_dependencies(floam_laser_processing_node ${PROJECT_NAME} ${dependencies} Eigen3)
+ament_target_dependencies(floam_laser_processing_node  ${dependencies} )
+target_link_libraries(floam_laser_processing_node ${CERES_LIBRARIES})
+target_include_directories(floam_laser_processing_node PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)     
 
 
-add_executable(floam_odom_estimation_node src/odomEstimationNode.cpp src/lidarOptimization.cpp src/lidar.cpp src/odomEstimationClass.cpp)
-#target_link_libraries(floam_odom_estimation_node ${EIGEN3_LIBRARIES} ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${CERES_LIBRARIES})
-target_link_libraries(floam_odom_estimation_node ${EIGEN3_LIBRARIES}  ${PCL_LIBRARIES} ${CERES_LIBRARIES})
-#ament_target_dependencies(floam_odom_estimation_node ${PROJECT_NAME} ${dependencies} Eigen3)
+# add_executable(floam_odom_estimation_node src/odomEstimationNode.cpp src/lidarOptimization.cpp src/lidar.cpp src/odomEstimationClass.cpp)
+# #target_link_libraries(floam_odom_estimation_node ${EIGEN3_LIBRARIES} ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${CERES_LIBRARIES})
+# target_link_libraries(floam_odom_estimation_node ${EIGEN3_LIBRARIES}  ${PCL_LIBRARIES} ${CERES_LIBRARIES})
+# #ament_target_dependencies(floam_odom_estimation_node ${PROJECT_NAME} ${dependencies} Eigen3)
 
 
-add_executable(floam_laser_mapping_node src/laserMappingNode.cpp src/laserMappingClass.cpp src/lidar.cpp)
-#target_link_libraries(floam_laser_mapping_node ${EIGEN3_LIBRARIES} ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${CERES_LIBRARIES})
-target_link_libraries(floam_laser_mapping_node ${EIGEN3_LIBRARIES}  ${PCL_LIBRARIES} ${CERES_LIBRARIES})
-#ament_target_dependencies(floam_laser_mapping_node ${PROJECT_NAME} ${dependencies} Eigen3)
+# add_executable(floam_laser_mapping_node src/laserMappingNode.cpp src/laserMappingClass.cpp src/lidar.cpp)
+# #target_link_libraries(floam_laser_mapping_node ${EIGEN3_LIBRARIES} ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${CERES_LIBRARIES})
+# target_link_libraries(floam_laser_mapping_node ${EIGEN3_LIBRARIES}  ${PCL_LIBRARIES} ${CERES_LIBRARIES})
+# #ament_target_dependencies(floam_laser_mapping_node ${PROJECT_NAME} ${dependencies} Eigen3)
+
+install(TARGETS
+  floam_laser_processing_node
+)
+install(PROGRAMS
+  DESTINATION lib/${PROJECT_NAME})
+
+install(DIRECTORY launch rviz
+  DESTINATION share/${PROJECT_NAME})
+
+ament_export_dependencies(${dependencies})
+ament_package()
