@@ -5,6 +5,7 @@
 #include <tf2/LinearMath/Quaternion.h>
 #include <pcl_conversions/pcl_conversions.h>
 #include <geometry_msgs/msg/transform_stamped.hpp>
+#include <geometry_msgs/msg/pose_stamped.hpp>
 
 // c++ header
 #include <thread>
@@ -19,7 +20,7 @@
 
 
 OdomEstimationNode::OdomEstimationNode()
-  : Node("odom_estimation_node"), is_odom_inited_(false), total_time_(0.0), total_frame_(0)
+  : Node("odom_estimation_node"), laserPath_{}, is_odom_inited_(false), total_time_(0.0), total_frame_(0)
 {
   int scan_line = 64;
   double scan_period = 0.1;
@@ -57,6 +58,7 @@ OdomEstimationNode::OdomEstimationNode()
     "laser_cloud_surf", 100, std::bind(&OdomEstimationNode::velodyneSurfHandler, this, std::placeholders::_1));
 
   pubLaserOdometry_ = this->create_publisher<nav_msgs::msg::Odometry>("odom", 100);
+  pubLaserPath_ = this->create_publisher<nav_msgs::msg::Path>("odom_path", 100);
 
   br_ = std::make_unique<tf2_ros::TransformBroadcaster>(*this);
 }
@@ -92,7 +94,7 @@ void OdomEstimationNode::odom_estimation()
       pointCloudSurfBuf_.pop();
       mutex_lock_.unlock();
 
-      if (is_odom_inited_ == false){
+      if (is_odom_inited_ == false) {
         odomEstimation_.initMapWithPoints(pointcloud_edge_in, pointcloud_surf_in);
         is_odom_inited_ = true;
         RCLCPP_INFO(this->get_logger(), "odom inited");
@@ -142,6 +144,15 @@ void OdomEstimationNode::odom_estimation()
       laserOdometry.pose.pose.position.y = t_current.y();
       laserOdometry.pose.pose.position.z = t_current.z();
       pubLaserOdometry_->publish(laserOdometry);
+
+      // publish path
+      geometry_msgs::msg::PoseStamped laserPose;
+      laserPose.header = laserOdometry.header;
+      laserPose.pose = laserOdometry.pose.pose;
+
+      laserPath_.header = laserOdometry.header;
+      laserPath_.poses.push_back(laserPose);
+      pubLaserPath_->publish(laserPath_);
     }
 
     //sleep 2 ms every time
