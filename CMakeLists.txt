@@ -86,6 +86,87 @@ target_include_directories(floam_laser_processing_node PUBLIC
 # target_link_libraries(floam_laser_mapping_node ${EIGEN3_LIBRARIES}  ${PCL_LIBRARIES} ${CERES_LIBRARIES})
 # #ament_target_dependencies(floam_laser_mapping_node ${PROJECT_NAME} ${dependencies} Eigen3)
 
+set(CMAKE_CXX_STANDARD 20)
+set(PYBIND11_PYTHON_VERSION 3.6)
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -fPIC")
+find_package(Python3 REQUIRED COMPONENTS Interpreter Development ${_pybind11_quiet}) 
+find_package(pybind11 REQUIRED)
+
+##HACK : ament_target_dependencies cannot declare its deps as private, which is needed for pybind11.. so copypaste
+function(ament_target_dependencies_private target)
+  if(NOT TARGET ${target})
+    message(FATAL_ERROR "ament_target_dependencies() the first argument must be a valid target name")
+  endif()
+  if(${ARGC} GREATER 0)
+    set(definitions "")
+    set(include_dirs "")
+    set(libraries "")
+    set(link_flags "")
+    foreach(package_name ${ARGN})
+      if(NOT ${${package_name}_FOUND})
+        message(FATAL_ERROR "ament_target_dependencies() the passed package name '${package_name}' was not found before")
+      endif()
+      list_append_unique(definitions ${${package_name}_DEFINITIONS})
+      list_append_unique(include_dirs ${${package_name}_INCLUDE_DIRS})
+      list(APPEND libraries ${${package_name}_LIBRARIES})
+      list_append_unique(link_flags ${${package_name}_LINK_FLAGS})
+    endforeach()
+    target_compile_definitions(${target}
+      PUBLIC ${definitions})
+    ament_include_directories_order(ordered_include_dirs ${include_dirs})
+    target_include_directories(${target}
+      PUBLIC ${ordered_include_dirs})
+    ament_libraries_deduplicate(unique_libraries ${libraries})
+    target_link_libraries(${target} PRIVATE
+      ${unique_libraries})
+    foreach(link_flag IN LISTS link_flags)
+      set_property(TARGET ${target} APPEND_STRING PROPERTY LINK_FLAGS " ${link_flag} ")
+    endforeach()
+  endif()
+endfunction()
+
+
+
+pybind11_add_module(${PROJECT_NAME} python/preprocessing.cpp)
+
+# target_compile_definitions(${PROJECT_NAME} PRIVATE VERSION_INFO=${EXAMPLE_VERSION_INFO})
+# target_include_directories(${PROJECT_NAME} PRIVATE ${PYBIND11_INCLUDE_DIRS} ${dependencies})
+# target_link_libraries(${PROJECT_NAME} PRIVATE Eigen3::Eigen ${PCL_LIBRARIES} ${dependencies} )
+
+# ament_python_install_package(${PROJECT_NAME} PACKAGE_DIR test/floam_pkg/${PROJECT_NAME})
+# add_pybind11_module(floam python/preprocessing.cpp
+#     LINK_LIBRARIES ${PROJECT_NAME}
+# )
+
+
+set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "${PYTHON_MODULE_PREFIX}"
+                                         SUFFIX "${PYTHON_MODULE_EXTENSION}")
+
+
+target_include_directories(${PROJECT_NAME} PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>
+  )
+
+
+
+ament_target_dependencies_private(
+  ${PROJECT_NAME}
+  "objectdetector_msgs"
+  "rclcpp"
+  "sensor_msgs"
+  "pcl_conversions"
+  "nav_msgs"
+  "tf2"
+  "tf2_ros"
+  pybind11::module
+)
+
+# Causes the visibility macros to use dllexport rather than dllimport,
+# which is appropriate when building the dll but not consuming it.
+target_compile_definitions(${PROJECT_NAME} PRIVATE "FAST_ROS_PI_BUILDING_LIBRARY")
+
+
 install(TARGETS
   floam_laser_processing_node
 )
@@ -95,5 +176,5 @@ install(PROGRAMS
 install(DIRECTORY launch rviz
   DESTINATION share/${PROJECT_NAME})
 
-ament_export_dependencies(${dependencies})
+ament_export_dependencies(${dependencies} pybind11)
 ament_package()
