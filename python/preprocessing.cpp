@@ -26,15 +26,6 @@
 #include "laserProcessingClass.h"
 
 
-LaserProcessingClass laserProcessing;
-std::mutex mutex_lock;
-std::queue<sensor_msgs::msg::PointCloud2::SharedPtr> pointCloudBuf;
-lidar::Lidar lidar_param;
-
-
-rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr pubEdgePoints;
-rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr pubSurfPoints;;
-rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr pubLaserCloudFiltered;
 
 
 #define STRINGIFY(x) #x
@@ -46,7 +37,7 @@ int add(int i, int j) {
 
 namespace py = pybind11;
 
-PYBIND11_MODULE(floam, m) {
+PYBIND11_MODULE(floam_preprocessing, m) {
     m.doc() = R"pbdoc(
         Pybind11 example plugin
         -----------------------
@@ -59,6 +50,16 @@ PYBIND11_MODULE(floam, m) {
            add
            subtract
     )pbdoc";
+
+    //LaserProcessingClass laserProcessing;
+    std::mutex mutex_lock;
+    std::queue<sensor_msgs::msg::PointCloud2::SharedPtr> pointCloudBuf;
+    //lidar::Lidar lidar_param;
+
+
+    rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr pubEdgePoints;
+    rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr pubSurfPoints;;
+    rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr pubLaserCloudFiltered;
 
     m.def("add", &add, R"pbdoc(
         Add two numbers
