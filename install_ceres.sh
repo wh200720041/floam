@@ -14,6 +14,8 @@ cd ../../
 git clone https://ceres-solver.googlesource.com/ceres-solver
 
 cd ceres-solver
+git checkout 2.0.0
+mv cmake/FindTBB.cmake ../
 
 mkdir ceres-bin
 
