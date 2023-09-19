@@ -29,8 +29,8 @@
 #include <Eigen/Geometry>
 
 //LOCAL LIB
-#include "lidar.h"
-#include "lidarOptimization.h"
+#include "lidar.hpp"
+#include "lidarOptimization.hpp"
 
 #include <rclcpp/rclcpp.hpp>
 

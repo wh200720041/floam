@@ -24,8 +24,8 @@
 #include <pcl/point_types.h>
 
 //local lib
-#include "lidar.h"
-#include "laserProcessingClass.h"
+#include "lidar.hpp"
+#include "laserProcessingClass.hpp"
 
 
 LaserProcessingClass laserProcessing;

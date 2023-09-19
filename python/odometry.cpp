@@ -23,7 +23,9 @@
 
 //local lib
 #include "lidar.hpp"
-#include "laserProcessingClass.hpp"
+
+#include "odomEstimationClass.hpp"
+
 
 
 
@@ -37,7 +39,7 @@ int add(int i, int j) {
 
 namespace py = pybind11;
 
-PYBIND11_MODULE(floam_preprocessing, handle) {
+PYBIND11_MODULE(floam_odometry, handle) {
     handle.doc() = R"pbdoc(
         Pybind11 example plugin
         -----------------------
@@ -61,7 +63,7 @@ PYBIND11_MODULE(floam_preprocessing, handle) {
     // rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr pubSurfPoints;;
     // rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr pubLaserCloudFiltered;
 
-    // py::class_< LaserProcessingClass >(handle, "LaserProcessingClass")
+    // py::class_< OdomEstimationClass >(handle, "OdomEstimationClass")
     //     .def(py::init<lidar::Lidar >());
         // .def("featureExtraction" , &LaserProcessingClass::featureExtraction)
         // .def("featureExtractionFromSector" , &LaserProcessingClass::featureExtractionFromSector)

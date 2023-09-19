@@ -13,7 +13,7 @@
 #include <pcl/filters/extract_indices.h>
 #include <pcl/filters/crop_box.h>
 
-#include "lidar.h"
+#include "lidar.hpp"
 
 //points covariance class
 class Double2d{

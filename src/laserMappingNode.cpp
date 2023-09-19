@@ -23,8 +23,8 @@
 #include <pcl/point_types.h>
 
 //local lib
-#include "laserMappingClass.h"
-#include "lidar.h"
+#include "laserMappingClass.hpp"
+#include "lidar.hpp"
 
 
 LaserMappingClass laserMapping;

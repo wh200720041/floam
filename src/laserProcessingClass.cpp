@@ -1,7 +1,7 @@
 // Author of FLOAM: Wang Han 
 // Email wh200720041@gmail.com
 // Homepage https://wanghan.pro
-#include "laserProcessingClass.h"
+#include "laserProcessingClass.hpp"
 
 void LaserProcessingClass::init(lidar::Lidar lidar_param_in){
     

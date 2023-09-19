@@ -75,10 +75,10 @@ target_include_directories(floam_laser_processing_node PUBLIC
   $<INSTALL_INTERFACE:include>)     
 
 
-# add_executable(floam_odom_estimation_node src/odomEstimationNode.cpp src/lidarOptimization.cpp src/lidar.cpp src/odomEstimationClass.cpp)
-# #target_link_libraries(floam_odom_estimation_node ${EIGEN3_LIBRARIES} ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${CERES_LIBRARIES})
-# target_link_libraries(floam_odom_estimation_node ${EIGEN3_LIBRARIES}  ${PCL_LIBRARIES} ${CERES_LIBRARIES})
-# #ament_target_dependencies(floam_odom_estimation_node ${PROJECT_NAME} ${dependencies} Eigen3)
+add_executable(floam_odom_estimation_node src/odomEstimationNode.cpp src/lidarOptimization.cpp src/lidar.cpp src/odomEstimationClass.cpp)
+#target_link_libraries(floam_odom_estimation_node ${EIGEN3_LIBRARIES} ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${CERES_LIBRARIES})
+ament_target_dependencies(floam_odom_estimation_node ${dependencies} Eigen3)
+target_link_libraries(floam_odom_estimation_node ${EIGEN3_LIBRARIES}  ${PCL_LIBRARIES} ${CERES_LIBRARIES})
 
 
 # add_executable(floam_laser_mapping_node src/laserMappingNode.cpp src/laserMappingClass.cpp src/lidar.cpp)
@@ -137,7 +137,7 @@ endfunction()
 
 ###############################################################################################
 #LIDAR CLASS 
-pybind11_add_module(${PROJECT_NAME}_lidar python/lidar_parameter.cpp )
+pybind11_add_module(${PROJECT_NAME}_lidar python/lidar_parameter.cpp src/lidar.cpp )
 
 set_target_properties(${PROJECT_NAME}_lidar PROPERTIES PREFIX "${PYTHON_MODULE_PREFIX}"
                                          SUFFIX "${PYTHON_MODULE_EXTENSION}")
@@ -212,6 +212,55 @@ target_compile_definitions(${PROJECT_NAME}_preprocessing PRIVATE "FAST_ROS_PI_BU
 #target_link_libraries(${PROJECT_NAME} PRIVATE  ${dependencies} )
 
 #########################################################################################
+
+
+
+############################################################################################
+#ODOMETRY-PROCESSING PYTHON 
+
+pybind11_add_module(${PROJECT_NAME}_odometry python/odometry.cpp )
+
+# target_compile_definitions(${PROJECT_NAME} PRIVATE VERSION_INFO=${EXAMPLE_VERSION_INFO})
+# target_include_directories(${PROJECT_NAME} PRIVATE ${PYBIND11_INCLUDE_DIRS} ${dependencies})
+# target_link_libraries(${PROJECT_NAME} PRIVATE Eigen3::Eigen ${PCL_LIBRARIES} ${dependencies} )
+
+# ament_python_install_package(${PROJECT_NAME} PACKAGE_DIR test/floam_pkg/${PROJECT_NAME})
+# add_pybind11_module(floam python/preprocessing.cpp
+#     LINK_LIBRARIES ${PROJECT_NAME}
+# )
+
+
+set_target_properties(${PROJECT_NAME}_odometry PROPERTIES PREFIX "${PYTHON_MODULE_PREFIX}"
+                                         SUFFIX "${PYTHON_MODULE_EXTENSION}")
+
+
+target_include_directories(${PROJECT_NAME}_odometry PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>
+  )
+
+
+
+ament_target_dependencies_private(
+  ${PROJECT_NAME}_odometry
+  "objectdetector_msgs"
+  "rclcpp"
+  "sensor_msgs"
+  "pcl_conversions"
+  "nav_msgs"
+  "tf2"
+  "tf2_ros"
+  pybind11::module
+)
+
+# Causes the visibility macros to use dllexport rather than dllimport,
+# which is appropriate when building the dll but not consuming it.
+target_compile_definitions(${PROJECT_NAME}_odometry PRIVATE "FAST_ROS_PI_BUILDING_LIBRARY")
+#target_link_libraries(${PROJECT_NAME} PRIVATE  ${dependencies} )
+
+#########################################################################################
+
+
 
 
 install(TARGETS
