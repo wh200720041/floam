@@ -54,7 +54,7 @@ PYBIND11_MODULE(floam_lidar, m) {
         Pybind11 example plugin
         -----------------------
 
-        .. currentmodule:: cmake_example
+        .. currentmodule:: floam_lidar
 
         .. autosummary::
            :toctree: _generate
