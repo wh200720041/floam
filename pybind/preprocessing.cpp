@@ -54,17 +54,31 @@ PYBIND11_MODULE(floam_preprocessing, handle) {
     //LaserProcessingClass laserProcessing;
     // std::mutex mutex_lock;
     // std::queue<sensor_msgs::msg::PointCloud2::SharedPtr> pointCloudBuf;
-    //lidar::Lidar lidar_param;
+    lidar::Lidar lidar_param;
+
+    int scan_line = 64;
+    double vertical_angle = 2.0;
+    double scan_period= 0.1;
+    double max_dis = 60.0;
+    double min_dis = 2.0;
+
+    
+    lidar_param.setScanPeriod(scan_period);
+    lidar_param.setVerticalAngle(vertical_angle);
+    lidar_param.setLines(scan_line);
+    lidar_param.setMaxDistance(max_dis);
+    lidar_param.setMinDistance(min_dis);
 
 
     // rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr pubEdgePoints;
     // rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr pubSurfPoints;;
     // rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr pubLaserCloudFiltered;
 
-    // py::class_< LaserProcessingClass >(handle, "LaserProcessingClass")
-    //     .def(py::init<lidar::Lidar >());
+    py::class_< LaserProcessingClass >(handle, "LaserProcessingClass")
+        .def(py::init<>())
+        .def("init_python" , &LaserProcessingClass::init_python);
         // .def("featureExtraction" , &LaserProcessingClass::featureExtraction)
-        // .def("featureExtractionFromSector" , &LaserProcessingClass::featureExtractionFromSector)
+        // .def("featureExtractionFromSector" , &LaserProcessingClass::featureExtractionFromSector);
         
     
 #ifdef VERSION_INFO

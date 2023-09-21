@@ -20,6 +20,12 @@ find_package(pcl_conversions REQUIRED )
 find_package(pcl_ros REQUIRED )
 find_package(Eigen3 REQUIRED)
 find_package(Ceres REQUIRED )
+##PYBIND 11 wrapper stuff starts here
+set(CMAKE_CXX_STANDARD 20)
+set(PYBIND11_PYTHON_VERSION 3.6)
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -fPIC")
+find_package(Python3 REQUIRED COMPONENTS Interpreter Development ${_pybind11_quiet}) 
+find_package(pybind11 REQUIRED)
 
 
 
@@ -63,6 +69,7 @@ set(dependencies
   pcl_conversions
   Ceres
   Eigen3
+  pybind11
 )
 
 
@@ -84,12 +91,6 @@ add_executable(floam_laser_mapping_node src/laserMappingNode.cpp src/laserMappin
 ament_target_dependencies(floam_laser_mapping_node  ${dependencies} Eigen3)
 target_link_libraries(floam_laser_mapping_node ${EIGEN3_LIBRARIES}  ${PCL_LIBRARIES} ${CERES_LIBRARIES})
 
-##PYBIND 11 wrapper stuff starts here
-set(CMAKE_CXX_STANDARD 20)
-set(PYBIND11_PYTHON_VERSION 3.6)
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -fPIC")
-find_package(Python3 REQUIRED COMPONENTS Interpreter Development ${_pybind11_quiet}) 
-find_package(pybind11 REQUIRED)
 
 ##HACK : ament_target_dependencies cannot declare its deps as private, which is needed for pybind11.. so copypaste
 function(ament_target_dependencies_private target)
