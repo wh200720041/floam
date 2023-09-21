@@ -3,6 +3,23 @@
 // Homepage https://wanghan.pro
 #include "laserProcessingClass.hpp"
 
+LaserProcessingClass::LaserProcessingClass(){
+ std::cout<<"Processing CLASS contructted";
+ int scan_line = 64;
+    double vertical_angle = 2.0;
+    double scan_period= 0.1;
+    double max_dis = 60.0;
+    double min_dis = 2.0;
+
+ lidar_param.setLines(scan_line);
+ lidar_param.setVerticalAngle(vertical_angle);
+ lidar_param.setScanPeriod(scan_period);
+ lidar_param.setMaxDistance(max_dis);
+ lidar_param.setMinDistance(min_dis);
+   
+}
+
+
 void LaserProcessingClass::init(lidar::Lidar lidar_param_in){
     
     lidar_param = lidar_param_in;
@@ -21,6 +38,14 @@ void LaserProcessingClass::init_python(int scan_line ,
     lidar_param.setScanPeriod(scan_period);
     lidar_param.setMaxDistance(max_dis);
     lidar_param.setMinDistance(min_dis);
+
+
+    std::cout<<"\nscan_line:"<<scan_line
+             <<"\nvertical_angle:"<<vertical_angle
+             <<"\nscan_period:"<<scan_period
+             <<"\nmax_dis:"<<max_dis
+             <<"\nmin_dis:"<<min_dis
+             <<"\n\nDONE initializing with lidar parameters \n\n";
 
 }
 
@@ -395,9 +420,6 @@ void LaserProcessingClass::featureExtractionFromSector(const pcl::PointCloud<pcl
     
 
 
-}
-LaserProcessingClass::LaserProcessingClass(){
-    
 }
 
 Double2d::Double2d(int id_in, double value_in){

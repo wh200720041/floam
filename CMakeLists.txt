@@ -162,7 +162,7 @@ target_compile_definitions(${PROJECT_NAME}_lidar PRIVATE "FAST_ROS_PI_BUILDING_L
 ############################################################################################
 #PRE-PROCESSING PYTHON 
 
-pybind11_add_module(${PROJECT_NAME}_preprocessing pybind/preprocessing.cpp )
+pybind11_add_module(${PROJECT_NAME}_preprocessing pybind/preprocessing.cpp src/laserProcessingClass.cpp src/lidar.cpp)
 
 set_target_properties(${PROJECT_NAME}_preprocessing PROPERTIES PREFIX "${PYTHON_MODULE_PREFIX}"
                                          SUFFIX "${PYTHON_MODULE_EXTENSION}")
@@ -187,7 +187,10 @@ ament_target_dependencies_private(
   pybind11::module
 )
 
-target_compile_definitions(${PROJECT_NAME}_preprocessing PRIVATE "FAST_ROS_PI_BUILDING_LIBRARY")
+#target_compile_definitions(${PROJECT_NAME}_preprocessing PRIVATE "FAST_ROS_PI_BUILDING_LIBRARY")
+#ament_target_dependencies(${PROJECT_NAME}_preprocessing  ${dependencies} )
+target_link_libraries(${PROJECT_NAME}_preprocessing PRIVATE ${CERES_LIBRARIES}  ${PCL_LIBRARIES})
+
 
 ############################################################################################
 ############################################################################################
