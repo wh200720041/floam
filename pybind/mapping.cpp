@@ -63,10 +63,10 @@ PYBIND11_MODULE(floam_mapping, handle) {
     // rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr pubSurfPoints;;
     // rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr pubLaserCloudFiltered;
 
-    // py::class_< LaserMappingClass  >(handle, "LaserMappingClass ")
-    //     .def(py::init<lidar::Lidar >());
-        // .def("updateCurrentPointsToMap" , &LaserMappingClass ::featureExtraction)
-        // .def("getMap" , &LaserMappingClass ::getMap)
+    py::class_< LaserMappingClass  >(handle, "LaserMappingClass ")
+        .def(py::init<lidar::Lidar >());
+        .def("updateCurrentPointsToMap" , &LaserMappingClass ::featureExtraction)
+        .def("getMap" , &LaserMappingClass ::getMap)
         
     
 #ifdef VERSION_INFO
