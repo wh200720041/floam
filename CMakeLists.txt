@@ -261,6 +261,51 @@ target_compile_definitions(${PROJECT_NAME}_odometry PRIVATE "FAST_ROS_PI_BUILDIN
 #########################################################################################
 
 
+############################################################################################
+#MAPPING-PROCESSING PYTHON 
+
+pybind11_add_module(${PROJECT_NAME}_mapping python/odometry.cpp )
+
+# target_compile_definitions(${PROJECT_NAME} PRIVATE VERSION_INFO=${EXAMPLE_VERSION_INFO})
+# target_include_directories(${PROJECT_NAME} PRIVATE ${PYBIND11_INCLUDE_DIRS} ${dependencies})
+# target_link_libraries(${PROJECT_NAME} PRIVATE Eigen3::Eigen ${PCL_LIBRARIES} ${dependencies} )
+
+# ament_python_install_package(${PROJECT_NAME} PACKAGE_DIR test/floam_pkg/${PROJECT_NAME})
+# add_pybind11_module(floam python/preprocessing.cpp
+#     LINK_LIBRARIES ${PROJECT_NAME}
+# )
+
+
+set_target_properties(${PROJECT_NAME}_mapping PROPERTIES PREFIX "${PYTHON_MODULE_PREFIX}"
+                                         SUFFIX "${PYTHON_MODULE_EXTENSION}")
+
+
+target_include_directories(${PROJECT_NAME}_mapping PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>
+  )
+
+
+
+ament_target_dependencies_private(
+  ${PROJECT_NAME}_mapping
+  "objectdetector_msgs"
+  "rclcpp"
+  "sensor_msgs"
+  "pcl_conversions"
+  "nav_msgs"
+  "tf2"
+  "tf2_ros"
+  pybind11::module
+)
+
+# Causes the visibility macros to use dllexport rather than dllimport,
+# which is appropriate when building the dll but not consuming it.
+target_compile_definitions(${PROJECT_NAME}_mapping PRIVATE "FAST_ROS_PI_BUILDING_LIBRARY")
+#target_link_libraries(${PROJECT_NAME} PRIVATE  ${dependencies} )
+
+#########################################################################################
+
 
 
 install(TARGETS
