@@ -53,7 +53,9 @@ PYBIND11_MODULE(floam_preprocessing, handle) {
     py::class_< LaserProcessingClass >(handle, "LaserProcessingClass")
         .def(py::init<>())
         .def("init_python" , &LaserProcessingClass::init_python)
-        .def("featureExtraction_python" , &LaserProcessingClass::featureExtraction_python);
+        .def("featureExtraction_python" , &LaserProcessingClass::featureExtraction_python)
+        .def("get_edge" , &LaserProcessingClass::get_edge)
+        .def("get_surf" , &LaserProcessingClass::get_surf);
         // .def("featureExtractionFromSector" , &LaserProcessingClass::featureExtractionFromSector);
         
     

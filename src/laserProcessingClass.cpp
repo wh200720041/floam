@@ -308,7 +308,18 @@ void LaserProcessingClass::featureExtraction_python(py::array_t<double>& input1)
     pc_out_edge_updated = pc_out_edge;
     pc_out_surf_updated = pc_out_surf;
 
+    std::cout<<"\nDONE\n";
+
 }
+
+pcl::PointCloud<pcl::PointXYZI> LaserProcessingClass::get_edge(){
+    return *pc_out_edge_updated;
+}
+
+pcl::PointCloud<pcl::PointXYZI> LaserProcessingClass::get_surf(){
+    return *pc_out_surf_updated;
+}
+
 
 void LaserProcessingClass::featureExtractionFromSector(const pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_in, std::vector<Double2d>& cloudCurvature, pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_out_edge, pcl::PointCloud<pcl::PointXYZI>::Ptr& pc_out_surf){
 

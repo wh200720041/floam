@@ -9,8 +9,8 @@ fy = 519.0
 depthScale = 1000.0
 
 
-color = cv2.imread('./1.png')
-depth = cv2.imread('./1.pgm', -1)
+color = cv2.imread('1.png')
+depth = cv2.imread('1.pgm', -1)
 #    depth = depth[:, :, 0]
 #https://stackoverflow.com/questions/36421437/reading-pgm-images-with-cv2-in-python
     
