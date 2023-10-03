@@ -38,13 +38,17 @@ class SurfNormAnalyticCostFunction : public ceres::SizedCostFunction<1, 7>
     double negative_OA_dot_norm_;
 };
 
-class PoseSE3Parameterization : public ceres::LocalParameterization
+class PoseSE3Parameterization : public ceres::Manifold
 {
   public:
     PoseSE3Parameterization() {}
     virtual ~PoseSE3Parameterization() {}
     virtual bool Plus(const double* x, const double* delta, double* x_plus_delta) const;
-    virtual bool ComputeJacobian(const double*, double* jacobian) const;
-    virtual int GlobalSize() const { return 7; }
-    virtual int LocalSize() const { return 6; }
+    virtual bool PlusJacobian(const double*, double* jacobian) const;
+    virtual bool RightMultiplyByPlusJacobian(const double*, const int,
+                                             const double*, double*) const;
+    virtual bool Minus(const double* y, const double* x, double* y_minus_x) const;
+    virtual bool MinusJacobian(const double*, double* jacobian) const;
+    virtual int AmbientSize() const { return 7; }
+    virtual int TangentSize() const { return 6; }
 };
