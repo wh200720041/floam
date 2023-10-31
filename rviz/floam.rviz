@@ -62,21 +62,7 @@ Visualization Manager:
         All Enabled: false
         base_link:
           Value: true
-        cam00:
-          Value: false
-        cam01:
-          Value: false
-        cam02:
-          Value: false
-        cam03:
-          Value: false
-        imu:
-          Value: true
         map:
-          Value: true
-        velodyne:
-          Value: true
-        world:
           Value: true
       Marker Scale: 25
       Name: TF
@@ -84,21 +70,9 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        world:
-          imu:
-            cam00:
-              {}
-            cam01:
-              {}
-            cam02:
-              {}
-            cam03:
-              {}
-            velodyne:
-              {}
-          map:
-            base_link:
-              {}
+        map:
+          base_link:
+            {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -131,7 +105,7 @@ Visualization Manager:
         Filter size: 10
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /velodyne_points
+        Value: /velodyne_points_filtered
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
@@ -166,7 +140,7 @@ Visualization Manager:
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: world
+    Fixed Frame: map
     Frame Rate: 30
   Name: root
   Tools:
@@ -245,5 +219,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1920
-  X: 0
+  X: 1920
   Y: 24

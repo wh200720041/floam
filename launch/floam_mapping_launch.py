@@ -32,14 +32,7 @@ def generate_launch_description():
   )
 
   bag_exec = ExecuteProcess(
-    cmd=["ros2", "bag", "play", "-r", "0.5", "/data/Kitti/raw/2011_09_30_0018"]
-  )
-
-  tf_node = Node(
-    package="tf2_ros",
-    executable="static_transform_publisher",
-    name="world2map_tf",
-    arguments=['0', '0', '0', '0', '0', '0', "world", "map"]
+    cmd=["ros2", "bag", "play", "-r", "0.85", "/data/Kitti/raw/2011_09_30_0018" , "--topics", "velodyne_points", "cam03/image_raw", "--clock"]
   )
 
   rviz_node = Node(
@@ -54,6 +47,5 @@ def generate_launch_description():
     odom_estimation_node,
     laser_mapping_node,
     bag_exec,
-    tf_node,
-    rviz_node,
+    rviz_node
   ])
