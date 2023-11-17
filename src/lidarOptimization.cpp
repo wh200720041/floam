@@ -2,7 +2,7 @@
 // Email wh200720041@gmail.com
 // Homepage https://wanghan.pro
 
-#include "lidarOptimization.h"
+#include "floam/lidarOptimization.hpp"
 
 EdgeAnalyticCostFunction::EdgeAnalyticCostFunction(Eigen::Vector3d curr_point_, Eigen::Vector3d last_point_a_, Eigen::Vector3d last_point_b_)
         : curr_point(curr_point_), last_point_a(last_point_a_), last_point_b(last_point_b_){

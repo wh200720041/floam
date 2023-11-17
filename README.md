@@ -1,4 +1,25 @@
 # FLOAM 
+
+
+
+## Modified 
+
+- ROS2 port
+- pybind11 support 
+
+
+Chris Sunny Thaliyath
+
+
+
+
+
+
+
+
+
+
+
 ## Fast LOAM (Lidar Odometry And Mapping)
 
 This work is an optimized version of A-LOAM and LOAM with the computational cost reduced by up to 3 times.

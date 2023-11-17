@@ -50,4 +50,3 @@ public:
 
 
 #endif // _LIDAR_OPTIMIZATION_ANALYTIC_H_
-
