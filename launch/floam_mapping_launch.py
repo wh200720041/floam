@@ -31,21 +31,10 @@ def generate_launch_description():
     parameters=[params]
   )
 
-  bag_exec = ExecuteProcess(
-    cmd=["ros2", "bag", "play", "-r", "0.85", "/workspaces/vscode_ros2_workspace/BTG_hesai_64_2023_11_09-12_56_42" , "--topics", "/pandar", "--clock"]
-  )
-
-  rviz_node = Node(
-    package="rviz2",
-    executable="rviz2",
-    name="rviz2",
-    arguments=["-d", join(get_package_share_directory("floam"), "rviz/", "floam_mapping.rviz")]
-  )
-
+  
   return LaunchDescription([
     laser_processing_node,
     odom_estimation_node,
     laser_mapping_node,
-    bag_exec,
-    rviz_node
+    
   ])

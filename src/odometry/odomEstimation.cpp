@@ -157,6 +157,15 @@ void OdomEstimationNode::odom_estimation(){
             laserOdometry.pose.pose.position.z = t_current.z();
             pubLaserOdometry_->publish(laserOdometry);
 
+            // publish path
+            geometry_msgs::msg::PoseStamped laserPose;
+            laserPose.header = laserOdometry.header;
+            laserPose.pose = laserOdometry.pose.pose;
+
+            laserPath_.header = laserOdometry.header;
+            laserPath_.poses.push_back(laserPose);
+            pubLaserPath_->publish(laserPath_);
+
         }
         //sleep 2 ms every time
         std::chrono::milliseconds dura(2);

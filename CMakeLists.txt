@@ -1,6 +1,14 @@
 cmake_minimum_required(VERSION 3.5)
 project(floam)
 
+set(CMAKE_BUILD_TYPE "Release")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3 -Wall -g -pthread")
+
+# Default to C++14
+if(NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD 14)
+endif()
+
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
@@ -263,8 +271,8 @@ target_compile_definitions(${PROJECT_NAME}_mapping PRIVATE "FAST_ROS_PI_BUILDING
 
 install(TARGETS 
   floam_laser_processing_node 
-  #floam_odom_estimation_node 
-  #floam_laser_mapping_node
+  floam_odom_estimation_node 
+  floam_laser_mapping_node
   DESTINATION lib/${PROJECT_NAME}
 )
 install(PROGRAMS
