@@ -22,8 +22,8 @@
 #include <pcl/point_types.h>
 
 //local lib
-#include "lidar.hpp"
-#include "laserProcessingClass.hpp"
+#include "floam/lidar.hpp"
+#include "floam/laserProcessingClass.hpp"
 
 
 

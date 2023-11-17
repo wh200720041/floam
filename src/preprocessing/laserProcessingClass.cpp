@@ -1,7 +1,7 @@
 // Author of FLOAM: Wang Han 
 // Email wh200720041@gmail.com
 // Homepage https://wanghan.pro
-#include "laserProcessingClass.hpp"
+#include "floam/laserProcessingClass.hpp"
 
 LaserProcessingClass::LaserProcessingClass(){
  std::cout<<"Processing CLASS contructted";

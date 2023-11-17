@@ -2,7 +2,7 @@
 // Email wh200720041@gmail.com
 // Homepage https://wanghan.pro
 
-#include "laserMappingClass.hpp"
+#include "floam/laserMappingClass.hpp"
 
 void LaserMappingClass::init(double map_resolution){
 	//init map

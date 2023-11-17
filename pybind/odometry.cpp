@@ -22,9 +22,9 @@
 #include <pcl/point_types.h>
 
 //local lib
-#include "lidar.hpp"
+#include "floam/lidar.hpp"
 
-#include "odomEstimationClass.hpp"
+#include "floam/odomEstimationClass.hpp"
 
 
 

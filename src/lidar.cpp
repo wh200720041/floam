@@ -2,7 +2,7 @@
 // Email wh200720041@gmail.com
 // Homepage https://wanghan.pro
 
-#include "lidar.hpp"
+#include "floam/lidar.hpp"
 
 
 lidar::Lidar::Lidar(){

@@ -2,9 +2,9 @@
 // Email wh200720041@gmail.com
 // Homepage https://wanghan.pro
 
-#include "odomEstimationClass.hpp"
+#include "floam/odomEstimationClass.hpp"
 
-void OdomEstimationClass::init(lidar::Lidar lidar_param, double map_resolution){
+void OdomEstimationClass::init(double map_resolution){
     //init local map
     laserCloudCornerMap = pcl::PointCloud<pcl::PointXYZI>::Ptr(new pcl::PointCloud<pcl::PointXYZI>());
     laserCloudSurfMap = pcl::PointCloud<pcl::PointXYZI>::Ptr(new pcl::PointCloud<pcl::PointXYZI>());

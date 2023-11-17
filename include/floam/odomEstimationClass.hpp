@@ -40,7 +40,7 @@ class OdomEstimationClass
     public:
     	OdomEstimationClass();
     	
-		void init(lidar::Lidar lidar_param, double map_resolution);	
+		void init(double map_resolution);	
 		void initMapWithPoints(const pcl::PointCloud<pcl::PointXYZI>::Ptr& edge_in, const pcl::PointCloud<pcl::PointXYZI>::Ptr& surf_in);
 		void updatePointsToMap(const pcl::PointCloud<pcl::PointXYZI>::Ptr& edge_in, const pcl::PointCloud<pcl::PointXYZI>::Ptr& surf_in);
 		void getMap(pcl::PointCloud<pcl::PointXYZI>::Ptr& laserCloudMap);
