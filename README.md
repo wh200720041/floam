@@ -43,9 +43,9 @@ Localization error:
 
 ## 3. Prerequisites
 ### 3.1 **Ubuntu** and **ROS**
-Ubuntu 64-bit 18.04.
+Ubuntu 64-bit 22.04.
 
-ROS Melodic. [ROS Installation](http://wiki.ros.org/ROS/Installation)
+ROS Noetic. [ROS Installation](http://wiki.ros.org/ROS/Installation)
 
 ### 3.2. **Ceres Solver**
 Follow [Ceres Installation](http://ceres-solver.org/installation.html).
@@ -56,7 +56,7 @@ Follow [PCL Installation](http://www.pointclouds.org/downloads/linux.html).
 ### 3.4. **Trajectory visualization**
 For visualization purpose, this package uses hector trajectory sever, you may install the package by 
 ```
-sudo apt-get install ros-melodic-hector-trajectory-server
+sudo apt-get install ros-noetic-hector-trajectory-server
 ```
 Alternatively, you may remove the hector trajectory server node if trajectory visualization is not needed
 
@@ -102,7 +102,7 @@ To generate rosbag file of kitti dataset, you may use the tools provided by
 You may wish to test FLOAM on your own platform and sensor such as VLP-16
 You can install the velodyne sensor driver by 
 ```
-sudo apt-get install ros-melodic-velodyne-pointcloud
+sudo apt-get install ros-noetic-velodyne-pointcloud
 ```
 launch floam for your own velodyne sensor
 ```
