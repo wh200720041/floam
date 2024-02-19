@@ -2,7 +2,7 @@
 <launch>
 
     
-    <node pkg="rosbag" type="play" name="rosbag_play" args="--clock $(env HOME)/Downloads/2011_09_30_0018.bag"/> 
+    <!-- <node pkg="rosbag" type="play" name="rosbag_play" args="clock  /media/cc/A0EC52D0EC52A078/DATA/wistron/new_driver/2021-09-28-14-43-19.bag"/>  -->
 
     <!-- For Velodyne VLP-16 
     <param name="scan_line" value="16" />
@@ -13,7 +13,7 @@
     -->
 
     <!-- For Velodyne HDL-64 -->
-    <param name="scan_line" value="64" />
+    <param name="scan_line" value="16" />
 
 
     <!--- Sim Time -->
@@ -21,7 +21,7 @@
     <param name="scan_period" value="0.1" /> 
     <param name="vertical_angle" type="double" value="2.0" />
     <param name="max_dis" type="double" value="90.0" />
-    <param name="min_dis" type="double" value="3.0" />
+    <param name="min_dis" type="double" value="1.0" />
 
     <!--- -->
     <node pkg="floam" type="floam_odom_estimation_node" name="floam_odom_estimation_node" output="screen"/>

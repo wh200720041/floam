@@ -1,3 +1,59 @@
+<a href="#"><img src="https://img.shields.io/badge/c++-%2300599C.svg?style=flat&logo=c%2B%2B&logoColor=white"></img></a>
+  <a href="#"><img src="https://img.shields.io/github/stars/chengwei0427/floam_g2o"></img></a>
+  <a href="#"><img src="https://img.shields.io/github/forks/chengwei0427/floam_g2o"></img></a>
+  <a href="#"><img src="https://img.shields.io/github/repo-size/chengwei0427/floam_g2o"></img></a>
+  <a href="https://github.com/chengwei0427/floam_g2o/issues"><img src="https://img.shields.io/github/issues/chengwei0427/floam_g2o"></img></a>
+  <a href="https://github.com/chengwei0427/floam_g2o/graphs/contributors"><img src="https://img.shields.io/github/contributors/chengwei0427/floam_g2o?color=blue"></img></a>
+
+# floam_g2o
+This repository is a modified LiDAR-inertial odometry system, which is developed based on the open-source odometry framework [**FLOAM**](https://github.com/wh200720041/floam).
+
+## Modification
+
+  - Use g2o instead of ceres
+  
+##	Compare with original floam
+
+<div align="center">
+<img src="./img/result.png" width="500px">
+</div>
+
+
+## demo
+
+**Test with kitti data**
+
+-[Bilibili video ](https://www.bilibili.com/video/BV1gY4y1G7of/)
+
+<div align="center">
+<img src="./img/kitti_test.png" width="1000px">
+</div>
+
+## Install
+
+Use the following commands to download and compile the package.
+
+```
+cd ~/catkin_ws/src
+git clone https://github.com/chengwei0427/floam_g2o.git
+cd ..
+catkin_make 
+```
+
+## Other notes
+
+1. you should change the cmakelist, find the right dependencies; **I think you can finish the work yourself**
+
+2.you could (W/O)comment the **#define USE_G2O** in **odomEstimationClass.h** to G2o or Ceres(original) method;
+
+3. you could modify the params in **floam_mapping.launch**  to set whether to save the gt-traj or laserodom-traj.
+
+## TODO
+
+  - [ ] [add right perturbation]
+  
+--------------=----------------------------  divide line  ----------------------------------------------
+
 # FLOAM 
 ## Fast LOAM (Lidar Odometry And Mapping)
 

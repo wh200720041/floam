@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <launch>
-
+    <arg name="project" default="floam_g2o"/>
     
-    <node pkg="rosbag" type="play" name="rosbag_play" args="--clock -r 0.5 $(env HOME)/Downloads/2011_09_30_0018.bag"/> 
+    <!-- <node pkg="rosbag" type="play" name="rosbag_play" args="clock -r 1.0 /media/cc/A0EC52D0EC52A078/DATA/wistron/new_driver/2021-09-28-14-43-19.bag"/>  -->
     
-    <!-- For Velodyne VLP-16 
+    <!-- For Velodyne VLP-16  
     <param name="scan_line" value="16" />
-    -->
+   -->
 
     <!-- For Velodyne HDL-32 
     <param name="scan_line" value="32" />
@@ -14,6 +14,7 @@
 
     <!-- For Velodyne HDL-64 -->
     <param name="scan_line" value="64" />
+    
     
     <!--- Sim Time -->
     <param name="/use_sim_time" value="true" />
@@ -24,15 +25,15 @@
     <param name="map_resolution" type="double" value="0.4" />
     <param name="min_dis" type="double" value="3.0" />
     <!--- -->
-    <node pkg="floam" type="floam_odom_estimation_node" name="floam_odom_estimation_node" output="screen"/>
-    <node pkg="floam" type="floam_laser_processing_node" name="floam_laser_processing_node" output="screen"/>
-    <node pkg="floam" type="floam_laser_mapping_node" name="floam_laser_mapping_node" output="screen"/>
+    <node pkg="$(arg project)" type="$(arg project)_estimation_node" name="$(arg project)_estimation_node" output="screen"/>
+    <node pkg="$(arg project)" type="$(arg project)_processing_node" name="$(arg project)_processing_node" output="screen"/>
+    <node pkg="$(arg project)" type="$(arg project)_mapping_node" name="$(arg project)_mapping_node" output="screen"/>
 
     <node pkg="tf" type="static_transform_publisher" name="word2map_tf"  args="0 0 0 0 0 0 /world /map 10" />
     
     <arg name="rviz" default="true" />
     <group if="$(arg rviz)">
-        <node launch-prefix="nice" pkg="rviz" type="rviz" name="rviz" args="-d $(find floam)/rviz/floam_mapping.rviz" />
+        <node launch-prefix="nice" pkg="rviz" type="rviz" name="rviz" args="-d $(find floam_g2o)/rviz/floam_mapping.rviz" />
     </group>
 
     
@@ -47,6 +48,13 @@
         <param name="/source_frame_name" value="base_link" />
         <param name="/trajectory_update_rate" value="10.0" />
         <param name="/trajectory_publish_rate" value="10.0" />
+    </node>
+    <!-- change source_frame_name to record different trajectory here -->
+    <node pkg="$(arg project)" type="recordTrajNode" name="recordTrajNode" output="screen">
+        <param name="/target_frame_name" value="world" />
+        <param name="/source_frame_name" value="base_link" />
+        <param name="/trajectory_update_rate" value="10.0" />
+        <param name="/filename" value="floam.txt" />
     </node>
 
 </launch>
