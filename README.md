@@ -43,12 +43,13 @@ Localization error:
 
 ## 3. Prerequisites
 ### 3.1 **Ubuntu** and **ROS**
-Ubuntu 64-bit 22.04.
+Ubuntu 64-bit 20.04.
 
 ROS Noetic. [ROS Installation](http://wiki.ros.org/ROS/Installation)
 
 ### 3.2. **Ceres Solver**
 Follow [Ceres Installation](http://ceres-solver.org/installation.html).
+Note that starting from Ceres 2.1, GPU can be used to speed up optimization
 
 ### 3.3. **PCL**
 Follow [PCL Installation](http://www.pointclouds.org/downloads/linux.html).

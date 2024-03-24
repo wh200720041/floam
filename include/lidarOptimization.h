@@ -6,6 +6,11 @@
 
 #include <ceres/ceres.h>
 #include <ceres/rotation.h>
+//update here
+#include <ceres/version.h>
+#if CERES_VERSION_MAJOR >= 3 || (CERES_VERSION_MAJOR >= 2 && CERES_VERSION_MINOR >= 1)
+#include <ceres/manifold.h>
+#endif
 #include <Eigen/Dense>
 #include <Eigen/Geometry>
 
@@ -25,6 +30,8 @@ class EdgeAnalyticCostFunction : public ceres::SizedCostFunction<1, 7> {
 		Eigen::Vector3d last_point_b;
 };
 
+
+
 class SurfNormAnalyticCostFunction : public ceres::SizedCostFunction<1, 7> {
 	public:
 		SurfNormAnalyticCostFunction(Eigen::Vector3d curr_point_, Eigen::Vector3d plane_unit_norm_, double negative_OA_dot_norm_);
@@ -36,9 +43,24 @@ class SurfNormAnalyticCostFunction : public ceres::SizedCostFunction<1, 7> {
 		double negative_OA_dot_norm;
 };
 
+// update here
+#if CERES_VERSION_MAJOR >= 3 || (CERES_VERSION_MAJOR >= 2 && CERES_VERSION_MINOR >= 1)
+class PoseSE3Parameterization : public ceres::Manifold {
+public:
+
+    PoseSE3Parameterization() {}
+    virtual ~PoseSE3Parameterization() {}
+    virtual bool Plus(const double* x, const double* delta, double* x_plus_delta) const;
+    virtual bool PlusJacobian(const double* x, double* jacobian) const;
+    virtual bool Minus(const double* x, const double* delta, double* x_plus_delta) const;
+    virtual bool MinusJacobian(const double* x, double* jacobian) const;
+    virtual int AmbientSize() const { return 7; }
+    virtual int TangentSize() const { return 6; }
+};
+#else
 class PoseSE3Parameterization : public ceres::LocalParameterization {
 public:
-	
+
     PoseSE3Parameterization() {}
     virtual ~PoseSE3Parameterization() {}
     virtual bool Plus(const double* x, const double* delta, double* x_plus_delta) const;
@@ -46,7 +68,7 @@ public:
     virtual int GlobalSize() const { return 7; }
     virtual int LocalSize() const { return 6; }
 };
-
+#endif
 
 
 #endif // _LIDAR_OPTIMIZATION_ANALYTIC_H_

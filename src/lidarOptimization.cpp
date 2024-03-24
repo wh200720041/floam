@@ -73,6 +73,56 @@ bool SurfNormAnalyticCostFunction::Evaluate(double const *const *parameters, dou
 
 }   
 
+#if CERES_VERSION_MAJOR >= 3 || (CERES_VERSION_MAJOR >= 2 && CERES_VERSION_MINOR >= 1)
+bool PoseSE3Parameterization::Plus(const double *x, const double *delta, double *x_plus_delta) const
+{
+    Eigen::Map<const Eigen::Vector3d> trans(x + 4);
+
+    Eigen::Quaterniond delta_q;
+    Eigen::Vector3d delta_t;
+    getTransformFromSe3(Eigen::Map<const Eigen::Matrix<double,6,1>>(delta), delta_q, delta_t);
+    Eigen::Map<const Eigen::Quaterniond> quater(x);
+    Eigen::Map<Eigen::Quaterniond> quater_plus(x_plus_delta);
+    Eigen::Map<Eigen::Vector3d> trans_plus(x_plus_delta + 4);
+
+    quater_plus = delta_q * quater;
+    trans_plus = delta_q * trans + delta_t;
+    return true;
+}
+
+bool PoseSE3Parameterization::Minus(const double *x, const double *delta, double *x_minus_delta) const
+{
+    Eigen::Map<const Eigen::Vector3d> trans(x + 4);
+
+    Eigen::Quaterniond delta_q;
+    Eigen::Vector3d delta_t;
+    getTransformFromSe3(Eigen::Map<const Eigen::Matrix<double,6,1>>(delta), delta_q, delta_t);
+    Eigen::Map<const Eigen::Quaterniond> quater(x);
+    Eigen::Map<Eigen::Quaterniond> quater_minus(x_minus_delta);
+    Eigen::Map<Eigen::Vector3d> trans_minus(x_minus_delta + 4);
+
+    quater_minus = delta_q.inverse() * quater;
+    trans_minus = delta_q.inverse() * trans - delta_t;
+    return true;
+}
+
+bool PoseSE3Parameterization::PlusJacobian(const double *x, double *jacobian) const
+{
+    Eigen::Map<Eigen::Matrix<double, 7, 6, Eigen::RowMajor>> j(jacobian);
+    (j.topRows(6)).setIdentity();
+    (j.bottomRows(1)).setZero();
+    return true;
+}
+
+bool PoseSE3Parameterization::MinusJacobian(const double *x, double *jacobian) const
+{
+    Eigen::Map<Eigen::Matrix<double, 7, 6, Eigen::RowMajor>> j(jacobian);
+    (j.topRows(6)).setIdentity();
+    (j.bottomRows(1)).setZero();
+    return true;
+}
+
+#else
 
 bool PoseSE3Parameterization::Plus(const double *x, const double *delta, double *x_plus_delta) const
 {
@@ -99,6 +149,8 @@ bool PoseSE3Parameterization::ComputeJacobian(const double *x, double *jacobian)
 
     return true;
 }
+
+#endif
 
 void getTransformFromSe3(const Eigen::Matrix<double,6,1>& se3, Eigen::Quaterniond& q, Eigen::Vector3d& t){
     Eigen::Vector3d omega(se3.data());
